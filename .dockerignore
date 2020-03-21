@@ -1,0 +1,4 @@
+node_modules
+venv
+.elasticbeanstalk
+.pytest_cache

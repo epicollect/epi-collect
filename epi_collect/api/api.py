@@ -1,5 +1,6 @@
 import datetime
 import json
+import logging
 import os
 import shutil
 import tarfile
@@ -117,7 +118,7 @@ def parse_google_takeout_archive(filepath: str) -> List[LocationDatum]:
     return parse_google_takeout_data(data)
 
 
-@app.route('/extract/google-takeout', methods=['POST'])
+@app.route('/api/extract/google-takeout', methods=['POST'])
 def extract_google_takeout():
     if 'file' not in request.files:
         return {'error': 'file not present'}, 400
@@ -139,3 +140,14 @@ def extract_google_takeout():
                 return {'error': f'Could not parse archive: {str(e)}'}, 400
         finally:
             shutil.rmtree(tmpdir)
+
+
+@app.route('/api/health')
+def health():
+    return "Healthy"
+
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)

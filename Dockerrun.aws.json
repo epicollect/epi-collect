@@ -1,0 +1,64 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "volumes": [
+    {
+      "name": "nginx-reverse-proxy-conf",
+      "host": {
+        "sourcePath": "/var/app/current/conf/nginx/reverse-proxy/nginx.conf"
+      }
+    }
+  ],
+  "containerDefinitions": [
+    {
+      "name": "epicollect-frontend",
+      "image": "epicollect/frontend:latest",
+      "essential": true,
+      "memory": 128,
+      "mountPoints": [
+        {
+          "sourceVolume": "awseb-logs-epicollect-frontend",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    },
+    {
+      "name": "epicollect-backend",
+      "image": "epicollect/backend:latest",
+      "essential": true,
+      "memory": 512,
+      "mountPoints": [
+        {
+          "sourceVolume": "awseb-logs-epicollect-backend",
+          "containerPath": "/var/log/gunicorn"
+        }
+      ]
+    },
+    {
+      "name": "reverse-proxy",
+      "image": "nginx:alpine",
+      "essential": true,
+      "memory": 128,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": [
+        "epicollect-frontend",
+        "epicollect-backend"
+      ],
+      "mountPoints": [
+        {
+          "sourceVolume": "nginx-reverse-proxy-conf",
+          "containerPath": "/etc/nginx/nginx.conf",
+          "readOnly": true
+        },
+        {
+          "sourceVolume": "awseb-logs-reverse-proxy",
+          "containerPath": "/var/log/nginx"
+        }
+      ]
+    }
+  ]
+}

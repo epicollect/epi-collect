@@ -34,7 +34,7 @@ class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
         const data = new FormData();
         const selected_file = this.state.selectedFile as File;
         data.append('file', selected_file);
-        axios.post('/extract/google-takeout', data, {
+        axios.post('/api/extract/google-takeout', data, {
             onUploadProgress: ProgressEvent => {
                 this.setState({
                     loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
