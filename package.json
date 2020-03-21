@@ -17,9 +17,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-api": "cd api && flask run --no-debugger",
+    "start-api": "cd epi_collect/api && flask run --no-debugger",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-py": "pytest",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
