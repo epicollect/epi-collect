@@ -4,7 +4,6 @@ import os
 import shutil
 import tarfile
 import tempfile
-import time
 import zipfile
 from typing import List, Optional
 
@@ -140,8 +139,3 @@ def extract_google_takeout():
                 return {'error': f'Could not parse archive: {str(e)}'}, 400
         finally:
             shutil.rmtree(tmpdir)
-
-
-@app.route('/time')
-def get_current_time():
-    return {'time': time.time()}

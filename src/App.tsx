@@ -1,34 +1,55 @@
-import React, {useEffect, useState} from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
 
-function App() {
-  const [currentTime, setCurrentTime] = useState(0);
+type AppState = {
+    selectedFile: File | null,
+    loaded: number
+}
 
-  useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
-    });
-  }, []);
+class App extends React.Component<{}, AppState> {
 
-  return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo"/>
-          <p>
-            The current time is {currentTime}.
-          </p>
-          <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-      </header>
-    </div>
-  );
+    constructor(props: any) {
+        super(props);
+        this.state = {
+            selectedFile: null,
+            loaded: 0
+        }
+    }
+
+    handleChange(selectorFiles: FileList | null) {
+        this.setState({
+            selectedFile: selectorFiles ? selectorFiles[0] : null,
+            loaded: 0
+        })
+    }
+
+    onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
+        event.preventDefault();
+        const data = new FormData();
+        const selected_file = this.state.selectedFile as File;
+        data.append('file', selected_file);
+        fetch('/extract/google-takeout', {
+            method: 'post',
+            body: data
+        }).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log(data);
+        });
+    }
+
+    render() {
+      return (
+          <div className="App">
+            <header className="App-header">
+              <form onSubmit={(e) => this.onFormSubmit(e)}>
+                  <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)} />
+                  <button type="submit">Upload</button>
+              </form>
+          </header>
+        </div>
+      )
+    }
 }
 
 export default App;
