@@ -1,8 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 import {Progress} from 'reactstrap';
-import './Upload.css';
-import {Location, WizardRouteComponentProps} from "./types";
+import '../styles.scss';
+import {Location, WizardRouteComponentProps} from "../types";
 
 type UploadState = {
     selectedFile: File | null,
@@ -50,7 +50,7 @@ class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
             });
 
             this.props.history.push({
-                pathname: '/select-data',
+                pathname: '/wizard/select-data',
                 state: {
                     locations: locations
                 }

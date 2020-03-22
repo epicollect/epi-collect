@@ -1,5 +1,5 @@
 import React from 'react';
-import {WizardRouteComponentProps} from './types';
+import {WizardRouteComponentProps} from '../types';
 import {Redirect} from 'react-router-dom';
 
 class SelectData extends React.Component<WizardRouteComponentProps, {}> {
@@ -11,7 +11,7 @@ class SelectData extends React.Component<WizardRouteComponentProps, {}> {
     handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
         this.props.history.push({
-            pathname: '/symptoms',
+            pathname: '/wizard/symptoms',
             state: this.props.location.state
         })
     }
@@ -27,7 +27,7 @@ class SelectData extends React.Component<WizardRouteComponentProps, {}> {
             )
         } else {
             return (
-                <Redirect to="/upload"/>
+                <Redirect to="/wizard"/>
             )
         }
     }

@@ -3,7 +3,7 @@ import {ErrorMessage, Field, Form, Formik, useField, useFormikContext} from "for
 import * as Yup from 'yup';
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {FormValues, WizardRouteComponentProps} from "./types";
+import {FormValues, WizardRouteComponentProps} from "../types";
 import axios from 'axios';
 import {Redirect} from "react-router-dom";
 
@@ -271,7 +271,7 @@ class Symptoms extends React.Component<WizardRouteComponentProps, {}> {
         axios.post('/api/save', this.props.location.state)
             .then((res) => {
                 this.props.history.push({
-                    pathname: '/completed',
+                    pathname: '/wizard/completed',
                     state: this.props.location.state
                 })
             })
@@ -292,7 +292,7 @@ class Symptoms extends React.Component<WizardRouteComponentProps, {}> {
             )
         } else {
             return (
-                <Redirect to="/upload"/>
+                <Redirect to="/wizard"/>
             )
         }
     }

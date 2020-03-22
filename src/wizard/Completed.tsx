@@ -1,5 +1,5 @@
 import React from 'react';
-import {WizardRouteComponentProps} from './types';
+import {WizardRouteComponentProps} from '../types';
 import {Redirect} from "react-router-dom";
 
 class Completed extends React.Component<WizardRouteComponentProps, {}> {
@@ -17,7 +17,7 @@ class Completed extends React.Component<WizardRouteComponentProps, {}> {
             )
         } else {
             return (
-                <Redirect to="/upload"/>
+                <Redirect to="/wizard"/>
             )
         }
     }
