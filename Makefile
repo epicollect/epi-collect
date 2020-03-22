@@ -28,7 +28,7 @@ run-dev:
 	yarn start-api
 
 stop-dev:
-    pkill -f yarn
+	pkill -f yarn
 
 deploy:
 	make build-docker
