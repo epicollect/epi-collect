@@ -1,5 +1,6 @@
 import React from 'react';
 import {WizardRouteComponentProps} from './types';
+import axios from "axios";
 
 class Symptoms extends React.Component<WizardRouteComponentProps, {}> {
 
@@ -9,10 +10,16 @@ class Symptoms extends React.Component<WizardRouteComponentProps, {}> {
 
     handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
-        this.props.history.push({
-            pathname: '/completed',
-            state: this.props.location.state
-        })
+        axios.post('/api/save', this.props.location.state)
+            .then((res) => {
+                this.props.history.push({
+                    pathname: '/completed',
+                    state: this.props.location.state
+                })
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render() {

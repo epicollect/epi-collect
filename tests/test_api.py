@@ -25,7 +25,7 @@ def test_extract_google_takeout(client):
         with open(filepath, 'rb') as f:
             file_data = f.read()
 
-        rv = client.post('/extract/google-takeout', data=dict(
+        rv = client.post('/api/extract/google-takeout', data=dict(
             file=(io.BytesIO(file_data), filename)
         ), follow_redirects=True, content_type='multipart/form-data')
         response = json.loads(rv.data)

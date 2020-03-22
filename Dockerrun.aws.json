@@ -26,6 +26,12 @@
       "image": "epicollect/backend:latest",
       "essential": true,
       "memory": 512,
+      "environment": [
+        {
+          "name": "CREDENTIALS_SOURCE",
+          "value": "aws"
+        }
+      ],
       "mountPoints": [
         {
           "sourceVolume": "awseb-logs-epicollect-backend",

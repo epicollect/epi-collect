@@ -15,6 +15,15 @@ build-docker-backend:
 run-docker-local:
 	docker-compose -f docker/docker-compose.yml up
 
+run-db-local:
+	docker run -e POSTGRES_PASSWORD=postgres -d -p 5432:5432 postgis/postgis
+	sleep 5
+	./venv/bin/python epi_collect/api/db.py --create
+
+
+stop-db-local:
+	docker ps -q --filter ancestor="postgis/postgis" | xargs docker stop
+
 run-dev:
 	yarn start &
 	yarn start-api

@@ -42,11 +42,13 @@ class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
                 })
             },
         }).then((res) => {
-            let locations = [];
-            for (const location in res.data['data']) {
-                const loc: Location = JSON.parse(location);
+            let locations: Location[] = [];
+            // @ts-ignore
+            res.data['data'].forEach(function (location) {
+                const loc: Location = JSON.parse(JSON.stringify(location));
                 locations.push(loc);
-            }
+            });
+
             this.props.history.push({
                 pathname: '/select-data',
                 state: {
@@ -57,18 +59,18 @@ class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
     }
 
     render() {
-      return (
-          <div className="App">
-            <header className="App-header">
-                <form onSubmit={(e) => this.onFormSubmit(e)}>
-                    <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)}/>
-                    <Progress max="100" color="success"
-                              value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
-                    <button type="submit">Upload</button>
-                </form>
-          </header>
-        </div>
-      )
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <form onSubmit={(e) => this.onFormSubmit(e)}>
+                        <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)}/>
+                        <Progress max="100" color="success"
+                                  value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
+                        <button type="submit">Upload</button>
+                    </form>
+                </header>
+            </div>
+        )
     }
 }
 

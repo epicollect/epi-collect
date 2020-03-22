@@ -6,10 +6,13 @@ import shutil
 import tarfile
 import tempfile
 import zipfile
-from typing import List, Optional
+from typing import List
 
 from flask import Flask, request
 from werkzeug.utils import secure_filename
+
+from epi_collect.api.data_classes import LocationDatum, ActivityDatum
+from epi_collect.api.db import get_db_connection, Location, Activity, User
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
@@ -19,44 +22,18 @@ UNZIPPABLE_EXTENSIONS = ['tgz', 'zip']
 GOOGLE_TAKEOUT_PATH = 'Takeout/Location History/Location History.json'
 
 # Do not include any data before this point, 2 weeks before first probable case according to WHO
-EARLIEST_DATETIME = datetime.datetime(2019, 12, 17, 0, 0, 0)
+EARLIEST_DATETIME = int(
+    datetime.datetime(2019, 12, 17, 0, 0, 0).replace(tzinfo=datetime.timezone.utc).timestamp() * 1000)
 # Anything with a higher accuracy number (= less accurate) will be removed
 MAX_ACCURACY = 5000
 
-
-class ActivityDatum:
-
-    def __init__(self, timestamp: datetime.datetime, activity: str, confidence: int):
-        self.timestamp = timestamp
-        self.activity = activity
-        self.confidence = confidence
-
-    def to_dict(self) -> dict:
-        return {
-            'timestamp': int(self.timestamp.replace(tzinfo=datetime.timezone.utc).timestamp() * 1000),
-            'activity': self.activity,
-            'confidence': self.confidence
-        }
-
-
-class LocationDatum:
-
-    def __init__(self, timestamp: datetime.datetime, longitude: float, latitude: float, accuracy: int,
-                 activities: Optional[List[ActivityDatum]] = None):
-        self.timestamp = timestamp
-        self.longitude = longitude
-        self.latitude = latitude
-        self.accuracy = accuracy
-        self.activities = activities if activities else []
-
-    def to_dict(self) -> dict:
-        return {
-            'timestamp': int(self.timestamp.replace(tzinfo=datetime.timezone.utc).timestamp() * 1000),
-            'longitude': self.longitude,
-            'latitude': self.latitude,
-            'accuracy': self.accuracy,
-            'activities': list(map(lambda x: x.to_dict(), self.activities))
-        }
+if __name__ != '__main__':
+    # Assumption here is that if we are not called directly, we're running through
+    # gunicorn and hence in prod
+    # TODO: clean this up
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 
 def allowed_file(filename: str, extensions: List[str]):
@@ -71,7 +48,7 @@ def parse_google_takeout_data(data: dict) -> List[LocationDatum]:
     """
     output = []
     for item in data['locations']:
-        timestamp = datetime.datetime.fromtimestamp(int(item['timestampMs']) / 1000)
+        timestamp = int(item['timestampMs'])
         if timestamp < EARLIEST_DATETIME:
             continue
         longitude = item['longitudeE7'] / 10000000.0
@@ -82,7 +59,7 @@ def parse_google_takeout_data(data: dict) -> List[LocationDatum]:
         activities = []
         if 'activity' in item:
             for activity in item['activity']:
-                activity_timestamp = datetime.datetime.fromtimestamp(int(activity['timestampMs']) / 1000)
+                activity_timestamp = int(activity['timestampMs'])
                 assert len(activity['activity'])
                 highest_confidence_activity = max(activity['activity'], key=lambda x: x['confidence'])
                 activities.append(
@@ -142,12 +119,45 @@ def extract_google_takeout():
             shutil.rmtree(tmpdir)
 
 
+@app.route('/api/save', methods=['POST'])
+def save():
+    try:
+        data = request.json
+        locations = [LocationDatum(**l) for l in data['locations']]
+        session = get_db_connection()
+        try:
+            # Add user
+            now = datetime.datetime.now(tz=datetime.timezone.utc)
+            user = User(first_submission_timestamp=now,
+                        last_updated_timestamp=now)
+            session.add(user)
+            session.flush()  # Populate ID
+
+            # Add locations
+            orm_locations = [Location.from_location_datum(l, user.id) for l in locations]
+            session.add_all(orm_locations)
+            session.flush()  # Populates the IDs
+
+            # Add activities
+            for location, orm_location in zip(locations, orm_locations):
+                # Add activities
+                for activity in location.activities:
+                    session.add(
+                        Activity.from_activity_datum(activity, orm_location.id))
+
+            # TODO: Add symptoms
+
+            session.commit()
+            return {'status': 'successful'}, 200
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+    except Exception as e:
+        return {'error': f'Could not save data: {str(e)}'}, 400
+
+
 @app.route('/api/health')
 def health():
     return "Healthy"
-
-
-if __name__ != '__main__':
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
