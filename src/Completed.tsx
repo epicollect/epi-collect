@@ -1,5 +1,6 @@
 import React from 'react';
 import {WizardRouteComponentProps} from './types';
+import {Redirect} from "react-router-dom";
 
 class Completed extends React.Component<WizardRouteComponentProps, {}> {
 
@@ -8,11 +9,17 @@ class Completed extends React.Component<WizardRouteComponentProps, {}> {
     }
 
     render() {
-        return (
-            <div>
-                <p>All done!</p>
-            </div>
-        )
+        if (this.props.location.state !== undefined) {
+            return (
+                <div>
+                    <p>All done!</p>
+                </div>
+            )
+        } else {
+            return (
+                <Redirect to="/upload"/>
+            )
+        }
     }
 }
 

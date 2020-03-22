@@ -15,8 +15,13 @@ export type Location = {
     activities: Activity[]
 }
 
+export type FormValues = {
+    [key: string]: FormValues | string,
+}
+
 export type WizardState = {
-    locations: Location[]
+    locations: Location[],
+    user_data?: FormValues
 }
 
 export type WizardRouteComponentProps = RouteComponentProps<{}, StaticContext, WizardState>

@@ -20,7 +20,6 @@ run-db-local:
 	sleep 5
 	./venv/bin/python epi_collect/api/db.py --create
 
-
 stop-db-local:
 	docker ps -q --filter ancestor="postgis/postgis" | xargs docker stop
 

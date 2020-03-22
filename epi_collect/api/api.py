@@ -12,7 +12,7 @@ from flask import Flask, request
 from werkzeug.utils import secure_filename
 
 from epi_collect.api.data_classes import LocationDatum, ActivityDatum
-from epi_collect.api.db import get_db_connection, Location, Activity, User
+from epi_collect.api.db import get_db_connection, Location, Activity, User, UserData
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
@@ -114,16 +114,48 @@ def extract_google_takeout():
                            'data': list(map(lambda x: x.to_dict(), parse_google_takeout_archive(full_path)))
                        }, 200
             except Exception as e:
-                return {'error': f'Could not parse archive: {str(e)}'}, 400
+                logging.error(e)
+                return {'error': f'Could not parse archive'}, 400
         finally:
             shutil.rmtree(tmpdir)
+
+
+def flatten_dict(data: dict, prefix: str = '') -> dict:
+    flattened = {}
+    for k, v in data.items():
+        key = f'{prefix}.{k}' if prefix else k
+        if isinstance(v, dict):
+            print(flatten_dict(v, prefix=k))
+            flattened.update(flatten_dict(v, prefix=key))
+        else:
+            flattened[key] = v
+    return flattened
+
+
+def fill_missing_user_data_values(data: dict) -> dict:
+    if data['has_symptoms'] == '0':
+        # No symptoms
+        for k in data['symptoms'].keys():
+            data['symptoms'][k] = '0'
+    if data['has_preexisting_conditions'] == '0':
+        # No pre-existing conditions
+        for k in data['preexisting_conditions'].keys():
+            data['preexisting_conditions'][k] = '0'
+    return data
 
 
 @app.route('/api/save', methods=['POST'])
 def save():
     try:
+        # Process data
         data = request.json
         locations = [LocationDatum(**l) for l in data['locations']]
+        user_data_dict = fill_missing_user_data_values(data['user_data'])
+        user_data_dict = flatten_dict(user_data_dict)
+        print(user_data_dict)
+        user_data_dict = {k: v for k, v in user_data_dict.items() if v}
+
+        # Save data
         session = get_db_connection()
         try:
             # Add user
@@ -138,6 +170,15 @@ def save():
             session.add_all(orm_locations)
             session.flush()  # Populates the IDs
 
+            # Add user data
+            for k, v in user_data_dict.items():
+                session.add(UserData(
+                    user_id=user.id,
+                    datum_type=k,
+                    datum_value=v,
+                    submitted_timestamp=now
+                ))
+
             # Add activities
             for location, orm_location in zip(locations, orm_locations):
                 # Add activities
@@ -145,17 +186,16 @@ def save():
                     session.add(
                         Activity.from_activity_datum(activity, orm_location.id))
 
-            # TODO: Add symptoms
-
             session.commit()
-            return {'status': 'successful'}, 200
+            return {'status': 'successful', 'id': user.id}, 200
         except Exception as e:
             session.rollback()
             raise e
         finally:
             session.close()
     except Exception as e:
-        return {'error': f'Could not save data: {str(e)}'}, 400
+        logging.error(e)
+        return {'error': f'Could not save data'}, 400
 
 
 @app.route('/api/health')

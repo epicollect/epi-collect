@@ -37,13 +37,13 @@ class User(Base):
     last_updated_timestamp = Column(DateTime, nullable=False)
 
 
-class Symptom(Base):
-    __tablename__ = 'symptoms'
+class UserData(Base):
+    __tablename__ = 'user_data'
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
-    type = Column(String, nullable=True, index=True)
-    start_timestamp = Column(DateTime, nullable=True, index=True)
-    end_timestamp = Column(DateTime, nullable=True, index=True)
+    datum_type = Column(String, nullable=False, index=True)
+    datum_value = Column(String, nullable=False, index=True)
+    submitted_timestamp = Column(DateTime, nullable=True, index=True)
 
 
 class Activity(Base):
@@ -100,8 +100,10 @@ def get_db_engine(*args, **kwargs):
     return create_engine(f'postgresql://{user}:{password}@{endpoint}:{port}/{database}', *args, **kwargs)
 
 
+engine = get_db_engine()
+
+
 def get_db_connection() -> Session:
-    engine = get_db_engine()
     Session.configure(bind=engine)
     return Session()
 
@@ -112,7 +114,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     if args.create:
         # Create all tables
-        Base.metadata.create_all(get_db_engine())
+        Base.metadata.create_all(engine)
     else:
 
         # Dump the CREATE script
