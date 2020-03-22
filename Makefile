@@ -27,6 +27,9 @@ run-dev:
 	yarn start &
 	yarn start-api
 
+stop-dev:
+    pkill -f yarn
+
 deploy:
 	make build-docker
 	docker push epicollect/frontend:latest
