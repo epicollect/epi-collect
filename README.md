@@ -1,44 +1,66 @@
-This project was bootstrapped with [Create React Upload](https://github.com/facebook/create-react-app).
+# EpiCollect
 
-## Available Scripts
+## Setup
 
-In the project directory, you can run:
+Make sure you have `yarn` and `virtualenv` installed.
 
-### `yarn start`
+```bash
+git clone git@github.com:larsmennen/epi-collect.git
+cd epi-collect
+yarn install
+virtualenv --python=python3.6 venv
+./venv/bin/activate
+source ./venv/bin/activate
+pip install -r requirements.txt
+```
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Run for development
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+To start:
+```bash
+make start-dev
+make start-db-local
+```
 
-### `yarn test`
+To stop:
+```bash
+make stop-dev
+make stop-db-local
+```
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+If you want to test using the docker containers (which is closer to deployment):
+```bash
+make build-docker
+make run-docker-local
+```
 
-### `yarn build`
+## Local and deployment structure
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The frontend is built in React with TypeScript.
+We use React Bootstrap for the UI.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The backend is built using Flask and uses GeoAlchemy (GIS extension on top of SQLalchemy) to communicate with a PostGIS 
+database for persistent storage.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Local
 
-### `yarn eject`
+Locally you can run in two ways:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Using `yarn` and `flask` (`make start-dev`), in which case all traffic on `/api` is routed to `flask`.
+In this setup, `make start-db-local` will spin up a local PostGIS instance with the correct schema.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. Using `docker-compose` in which case the same docker containers as in the actual deployment are created, 
+but they are span up locally using `docker-compose`. The database doesn't work in this setup.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Deployment
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+We deploy using `make deploy` (you need AWS access for this) which builds the following docker containers:
 
-## Learn More
+1. `nginx` container to serve the frontend React app.
+2. `gunicorn` container to serve the Python backend.
 
-You can learn more in the [Create React Upload documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+These are pushed to Docker Hub. We then deploy this to AWS Elastic Beanstalk, where we have a `nginx` reverse proxy 
+behind AWS' load balancer, which routes all traffic on `/api` to the `gunicorn` container and all other traffic to the 
+frontend `nginx` container.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+There is also a PostGIS database running in AWS RDS (Postgres with PostGIS extensions enabled).
