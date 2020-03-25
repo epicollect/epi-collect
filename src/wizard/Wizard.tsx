@@ -1,82 +1,103 @@
-import {Redirect, Route, Switch, useLocation, useRouteMatch} from "react-router-dom";
-import Upload from "./Upload";
-import SelectData from "./SelectData";
-import Symptoms from "./Symptoms";
-import Completed from "./Completed";
+import {Redirect, Route, Switch} from "react-router-dom";
 import React, {ComponentType} from "react";
 import {Breadcrumb, Container, Row} from "react-bootstrap";
-import {RouteComponentProps} from "react-router";
+import {RouteComponentProps, StaticContext} from "react-router";
 import {LinkContainer} from "react-router-bootstrap";
+import {WizardState} from "../types";
 
 type Step = {
     uri: string,
     component: ComponentType<RouteComponentProps<any>> | ComponentType<any>,
-    label: string
+    label: string,
 }
 
-const Wizard = () => {
+type WizardProps = {
+    steps: Step[]
+}
 
-    let {path, url} = useRouteMatch();
-    let location = useLocation();
+class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any> & WizardProps, WizardState> {
 
-    const steps: Step[] = [
-        {uri: `${path}/upload`, component: Upload, label: "Upload your data"},
-        {uri: `${path}/select-data`, component: SelectData, label: "Review and filter data"},
-        {uri: `${path}/symptoms`, component: Symptoms, label: "Add symptoms"},
-        {uri: `${path}/completed`, component: Completed, label: "Confirmation"}
-    ];
+    constructor(props: RouteComponentProps<{}, StaticContext, any> & WizardProps) {
+        super(props);
+        this.state = {
+            locations: []
+        }
+    }
 
-    let seen_active = false;
+    onNavigate = (event: React.SyntheticEvent<any> | undefined, uri: string, state: WizardState) => {
+        if (event !== undefined) {
+            event.preventDefault();
+        }
+        this.setState(state);
+        this.props.history.push({
+            pathname: uri
+        });
+    };
 
-    return (
+    render() {
 
-        <>
-            <Container>
-                <Row>
-                    <Breadcrumb>
-                        {steps.map((step) => {
-                                if (step.uri === location.pathname) {
-                                    // Current
-                                    seen_active = true;
+        let {path, url} = this.props.match;
+        let location = this.props.location;
+
+        let seen_active = false;
+
+        return (
+
+            <>
+                <Container>
+                    <Row>
+                        <Breadcrumb>
+                            {this.props.steps.map((step) => {
+                                    if (step.uri === location.pathname) {
+                                        // Current
+                                        seen_active = true;
+                                        return (
+                                            <LinkContainer to={step.uri} key={step.uri}
+                                                           onClick={(e) => this.onNavigate(e, step.uri, this.state)}>
+                                                <Breadcrumb.Item className="current" active>{step.label}</Breadcrumb.Item>
+                                            </LinkContainer>
+                                        )
+                                    } else if (!seen_active) {
+                                        // Before current
+                                        return (
+                                            <LinkContainer to={step.uri} key={step.uri}
+                                                           onClick={(e) => this.onNavigate(e, step.uri, this.state)}>
+                                                <Breadcrumb.Item className="completed">{step.label}</Breadcrumb.Item>
+                                            </LinkContainer>
+                                        )
+                                    } else {
+                                        // After current
+                                        return (
+                                            <Breadcrumb.Item active key={step.uri}>{step.label}</Breadcrumb.Item>
+                                        )
+                                    }
+                                }
+                            )}
+                        </Breadcrumb>
+                    </Row>
+                    <Row className="justify-content-md-center">
+                        <Switch>
+                            <Route key={""} exact path={path}>
+                                <Redirect to={`${path}/upload`}/>
+                            </Route>
+                            {this.props.steps.map((step) => {
                                     return (
-                                        <LinkContainer to={step.uri} key={step.uri}>
-                                            <Breadcrumb.Item className="current" active>{step.label}</Breadcrumb.Item>
-                                        </LinkContainer>
-                                    )
-                                } else if (!seen_active) {
-                                    // Before current
-                                    return (
-                                        <LinkContainer to={step.uri} key={step.uri}>
-                                            <Breadcrumb.Item className="completed">{step.label}</Breadcrumb.Item>
-                                        </LinkContainer>
-                                    )
-                                } else {
-                                    // After current
-                                    return (
-                                        <Breadcrumb.Item active key={step.uri}>{step.label}</Breadcrumb.Item>
+                                        <Route key={step.uri} path={step.uri} render={(props) => (
+                                            React.createElement(step.component, Object.assign({}, props, {
+                                                onNavigate: this.onNavigate,
+                                                data: this.state
+                                            }))
+                                        )}/>
                                     )
                                 }
-                            }
-                        )}
-                    </Breadcrumb>
-                </Row>
-                <Row className="justify-content-md-center">
-                    <Switch>
-                        <Route key={""} exact path={path}>
-                            <Redirect to={`${path}/upload`}/>
-                        </Route>
-                        {steps.map((step) => {
-                                return (
-                                    <Route key={step.uri} path={step.uri} component={step.component}/>
-                                )
-                            }
-                        )}
-                    </Switch>
-                </Row>
-            </Container>
+                            )}
+                        </Switch>
+                    </Row>
+                </Container>
 
-        </>
-    );
+            </>
+        );
+    }
 }
 
 export default Wizard;

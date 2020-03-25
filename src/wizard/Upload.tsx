@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import {Progress} from 'reactstrap';
 import '../styles.scss';
-import {Location, WizardRouteComponentProps} from "../types";
+import {Location, WizardStepProps} from "../types";
 
 type UploadState = {
     selectedFile: File | null,
@@ -10,9 +10,9 @@ type UploadState = {
     processing: boolean
 }
 
-class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
+class Upload extends React.Component<WizardStepProps, UploadState> {
 
-    constructor(props: WizardRouteComponentProps) {
+    constructor(props: WizardStepProps) {
         super(props);
         this.state = {
             selectedFile: null,
@@ -46,15 +46,13 @@ class Upload extends React.Component<WizardRouteComponentProps, UploadState> {
             // @ts-ignore
             res.data['data'].forEach(function (location) {
                 const loc: Location = JSON.parse(JSON.stringify(location));
+                loc.filtered = false;
                 locations.push(loc);
             });
 
-            this.props.history.push({
-                pathname: '/wizard/select-data',
-                state: {
-                    locations: locations
-                }
-            })
+            const state = this.props.data;
+            state.locations = locations;
+            this.props.onNavigate(undefined, '/wizard/select-data', state);
         });
     }
 

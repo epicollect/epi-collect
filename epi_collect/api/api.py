@@ -125,7 +125,6 @@ def flatten_dict(data: dict, prefix: str = '') -> dict:
     for k, v in data.items():
         key = f'{prefix}.{k}' if prefix else k
         if isinstance(v, dict):
-            print(flatten_dict(v, prefix=k))
             flattened.update(flatten_dict(v, prefix=key))
         else:
             flattened[key] = v

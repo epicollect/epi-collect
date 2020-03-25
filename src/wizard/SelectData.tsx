@@ -1,30 +1,32 @@
 import React from 'react';
-import {Location, WizardRouteComponentProps} from '../types';
-import {Redirect} from 'react-router-dom';
+import {GeoMapState, Location, WizardStepProps} from '../types';
 import GeoMap from "./GeoMap";
+import {Redirect} from 'react-router-dom';
 
 type DataSelectorState = {};
 
-class SelectData extends React.Component<WizardRouteComponentProps, DataSelectorState> {
+class SelectData extends React.Component<WizardStepProps, DataSelectorState> {
 
-    constructor(props: WizardRouteComponentProps) {
+    constructor(props: WizardStepProps) {
         super(props);
     }
 
-    onDone = (locations: Location[]) => {
-        const state = this.props.location.state;
+    onDone = (locations: Location[], geomap_state: GeoMapState) => {
+        const state = this.props.data;
         state.locations = locations;
-        this.props.history.push({
-            pathname: '/wizard/symptoms',
-            state: this.props.location.state
-        });
+        state.geomap = geomap_state;
+        this.props.onNavigate(undefined, '/wizard/symptoms', state);
     };
 
     render() {
-        if (this.props.location.state !== undefined) {
+        if (this.props.data.locations.length !== 0) {
             return (
                 <div>
-                    <GeoMap locations={this.props.location.state.locations} onDone={this.onDone}/>
+                    <GeoMap locations={this.props.data.locations}
+                            onDone={this.onDone}
+                            values={this.props.data.geomap && this.props.data.geomap.values}
+                            overlays={this.props.data.geomap && this.props.data.geomap.overlays}
+                            selected_time_range={this.props.data.geomap && this.props.data.geomap.selected_time_range}/>
 
                 </div>
             )

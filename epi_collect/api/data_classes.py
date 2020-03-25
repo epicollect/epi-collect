@@ -4,7 +4,7 @@ from typing import Union, Optional, List
 
 class ActivityDatum:
 
-    def __init__(self, timestamp: Union[datetime, int], activity: str, confidence: int):
+    def __init__(self, timestamp: Union[datetime, int], activity: str, confidence: int, **kwargs):
         self.timestamp = datetime.fromtimestamp(int(timestamp) / 1000) if isinstance(timestamp,
                                                                                      int) else timestamp
         self.activity = activity
@@ -21,7 +21,7 @@ class ActivityDatum:
 class LocationDatum:
 
     def __init__(self, timestamp: Union[datetime, int], longitude: float, latitude: float, accuracy: int,
-                 activities: Optional[List[ActivityDatum]] = None):
+                 activities: Optional[List[ActivityDatum]] = None, **kwargs):
         self.timestamp = datetime.fromtimestamp(int(timestamp) / 1000) if isinstance(timestamp,
                                                                                      int) else timestamp
         self.longitude = longitude

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Location} from '../types';
+import {GeoMapProps, GeoMapState, Location} from '../types';
 import {DrawingManager, GoogleMap, useLoadScript} from '@react-google-maps/api';
 import {Spinner} from "react-bootstrap";
 import {Handles, Rail, Slider, Tracks} from 'react-compound-slider';
@@ -24,26 +24,12 @@ const withIsLoadedHook = (Component: any) => {
     };
 };
 
-type GeoMapProps = {
-    locations: Location[],
-    onDone: (locations: Location[]) => void
-}
-
-type GeoMapState = {
-    overlays: any[],
-    selected_overlay: any,
-    markers: any[],
-    valid_markers: any[],
-    domain: Array<number>,
-    domain_timestamp: ReadonlyArray<number>,
-    values: Array<number>,
-    selected_time_range: Array<number>
-}
-
 const MS_IN_A_DAY = 24 * 60 * 60 * 1000;
 
 // TODO: Can probably clean it up a bit and make it more React-style, get better typing.
 class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
+
+    _map_instance = undefined;
 
     constructor(props: GeoMapProps) {
         super(props);
@@ -54,21 +40,28 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
         // The unit for domain and values will be days from the day *before* min_timestamp, up until the day *after* max_timestamp
         const min_days_since_epoch = Math.floor((new Date(min_timestamp).getTime()) / MS_IN_A_DAY);
         const max_days_since_epoch = Math.ceil((new Date(max_timestamp).getTime()) / MS_IN_A_DAY);
-
+        console.log(props.values);
         this.state = {
-            overlays: [],
+            overlays: props.overlays !== undefined ? props.overlays : [],
             markers: [],
             valid_markers: [],
             selected_overlay: undefined,
             domain: [min_days_since_epoch, max_days_since_epoch],
             domain_timestamp: [min_timestamp, max_timestamp],
-            values: [min_days_since_epoch, max_days_since_epoch],
-            selected_time_range: [
+            values: props.values !== undefined ? props.values : [min_days_since_epoch, max_days_since_epoch],
+            selected_time_range: props.selected_time_range !== undefined ? props.selected_time_range : [
                 (new Date(Math.round(min_days_since_epoch * MS_IN_A_DAY))).getTime(),
                 (new Date(Math.round(max_days_since_epoch * MS_IN_A_DAY))).getTime()
             ]
         };
 
+    }
+
+    componentWillUnmount(): void {
+        if (this._map_instance !== undefined) {
+            // @ts-ignore
+            google.maps.event.clearInstanceListeners(this._map_instance)
+        }
     }
 
     formatTimestamp = (timestamp: number) => new Intl.DateTimeFormat('en-US', {
@@ -84,7 +77,7 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
 
     handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
         event.preventDefault();
-        this.props.onDone(this.getValidLocations());
+        this.props.onDone(this.getValidLocations(), this.state);
     };
 
     onSliderUpdate = (values: ReadonlyArray<number>) => {
@@ -96,7 +89,8 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
             (new Date(Math.round(max_value * MS_IN_A_DAY))).getTime()
         ];
         this.setState({
-            selected_time_range: selected_time_range
+            selected_time_range: selected_time_range,
+            values: values.slice()
         });
         return selected_time_range;
     };
@@ -157,16 +151,15 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
     };
 
     getValidLocations = () => {
-        const valid_locations: Location[] = [];
         this.props.locations.forEach((location: Location, index) => {
             const marker_idx = this.state.valid_markers.findIndex((element: any) =>
                 element.location_idx === index
             );
-            if (marker_idx >= 0) {
-                valid_locations.push(location);
+            if (marker_idx < 0) {
+                location.filtered = true;
             }
         });
-        return valid_locations;
+        return this.props.locations;
     };
 
     clearSelection = () => {
@@ -216,17 +209,24 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
 
         // @ts-ignore
         google.maps.event.addListener(map_instance, 'click', this.clearSelection);
+        this._map_instance = map_instance;
 
         // Center the view
         // @ts-ignore
         let bounds = new google.maps.LatLngBounds();
-        for (let i = 0; i < this.props.locations.length; ++i) {
+        this.props.locations.forEach((loc) => {
             bounds.extend({
-                lat: this.props.locations[i].latitude,
-                lng: this.props.locations[i].longitude
+                lat: loc.latitude,
+                lng: loc.longitude
             })
-        }
+        });
         map_instance.fitBounds(bounds);
+
+        // Add overlays
+        this.state.overlays.forEach((overlay) => {
+            console.log(overlay);
+            overlay.overlay.setMap(map_instance);
+        });
 
         // Add markers
         let markers: any[] = [];

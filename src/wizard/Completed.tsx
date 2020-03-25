@@ -1,15 +1,17 @@
 import React from 'react';
-import {WizardRouteComponentProps} from '../types';
+import {FormValues, WizardStepProps} from '../types';
 import {Redirect} from "react-router-dom";
 
-class Completed extends React.Component<WizardRouteComponentProps, {}> {
+class Completed extends React.Component<WizardStepProps, {}> {
 
-    constructor(props: WizardRouteComponentProps) {
+    constructor(props: WizardStepProps) {
         super(props);
     }
 
     render() {
-        if (this.props.location.state !== undefined) {
+        if (this.props.data.locations.length !== 0
+            && 'user_data' in this.props.data
+            && Object.keys(this.props.data.user_data as FormValues).length !== 0) {
             return (
                 <div>
                     <p>All done!</p>
