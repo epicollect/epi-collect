@@ -148,12 +148,12 @@ const SymptomsForm = (props: SymptomsFormProps) => {
             const value = parseInt(e.target.value, 10);
             const groups = document.querySelectorAll('.hide_' + section);
             if (value === 1) {
-                for (var i = 0; i < groups.length; i++) {
+                for (let i = 0; i < groups.length; i++) {
                     groups[i].classList.remove('d-none');
                     groups[i].classList.add('d-block');
                 }
             } else {
-                for (var i = 0; i < groups.length; i++) {
+                for (let i = 0; i < groups.length; i++) {
                     groups[i].classList.remove('d-block');
                     groups[i].classList.add('d-none');
                 }
