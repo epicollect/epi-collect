@@ -143,6 +143,25 @@ const SymptomsForm = (props: SymptomsFormProps) => {
         })
     ;
 
+    const handleDisplayChange = (section: string, inner_handler: (e: any) => void) => {
+        return (e: React.ChangeEvent<any>) => {
+            const value = parseInt(e.target.value, 10);
+            const groups = document.querySelectorAll('.hide_' + section);
+            if (value === 1) {
+                for (var i = 0; i < groups.length; i++) {
+                    groups[i].classList.remove('d-none');
+                    groups[i].classList.add('d-block');
+                }
+            } else {
+                for (var i = 0; i < groups.length; i++) {
+                    groups[i].classList.remove('d-block');
+                    groups[i].classList.add('d-none');
+                }
+            }
+            inner_handler(e);
+        }
+    };
+
     return (
         <Formik
             enableReinitialize={true}
@@ -190,7 +209,9 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
                     <Form.Group controlId="has_symptoms">
                         <Form.Label>Do you currently have or have you had symptoms?</Form.Label>
-                        <Form.Control name="has_symptoms" as="select" onChange={handleChange} onBlur={handleBlur}
+                        <Form.Control name="has_symptoms" as="select"
+                                      onChange={handleDisplayChange('has_symptoms', handleChange)}
+                                      onBlur={handleBlur}
                                       className={touched.has_symptoms && errors.has_symptoms ? "is-invalid" : null}>
                             {select_options.map((item, i) => (
                                 <option key={item.id} value={item.id}>{item.value}</option>
@@ -199,7 +220,7 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                         <ErrorMessage name="has_symptoms"/>
                     </Form.Group>
 
-                    <Form.Group controlId="diagnosis.covid19_diagnosed">
+                    <Form.Group controlId="diagnosis.covid19_diagnosed" className="d-none hide_has_symptoms">
                         <Form.Label>Have you been diagnosed with
                             COVID-19?</Form.Label>
                         <Form.Control name="diagnosis.covid19_diagnosed" as="select" onChange={handleChange}
@@ -212,14 +233,14 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                         <ErrorMessage name="diagnosis.covid19_diagnosed"/>
                     </Form.Group>
 
-                    <Form.Group controlId="diagnosis.covid19_diagnosis_date">
-                        <Form.Label>When were you diagnosed?</Form.Label>
+                    <Form.Group controlId="diagnosis.covid19_diagnosis_date" className="d-none hide_has_symptoms">
+                        <Form.Label>If applicable, when were you diagnosed?</Form.Label>
                         <DatePickerField name="diagnosis.covid19_diagnosis_date" maxDate={new Date()}
                                          value={values['diagnosis.covid19_diagnosis_date']}/>
                         <ErrorMessage name="diagnosis.covid19_diagnosis_date"/>
                     </Form.Group>
 
-                    <Form.Group controlId="diagnosis.first_symptoms_date">
+                    <Form.Group controlId="diagnosis.first_symptoms_date" className="d-none hide_has_symptoms">
                         <Form.Label>When did you first get
                             symptoms?</Form.Label>
                         <DatePickerField name="diagnosis.first_symptoms_date" maxDate={new Date()}
@@ -235,7 +256,8 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                     </Form.Group>
 
                     {symptoms.map((symptom, i) => (
-                        <Form.Group controlId={`symptoms.${symptom.id}`} key={`symptoms.${symptom.id}`}>
+                        <Form.Group controlId={`symptoms.${symptom.id}`} key={`symptoms.${symptom.id}`}
+                                    className="d-none hide_has_symptoms">
                             <Form.Label>{symptom.name}</Form.Label>
                             <Form.Control name={`symptoms.${symptom.id}`} as="select" onChange={handleChange}
                                           onBlur={handleBlur}
@@ -250,7 +272,8 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
                     <Form.Group controlId="pregnancy.currently_pregnant">
                         <Form.Label>Are you currently pregnant?</Form.Label>
-                        <Form.Control name="pregnancy.currently_pregnant" as="select" onChange={handleChange}
+                        <Form.Control name="pregnancy.currently_pregnant" as="select"
+                                      onChange={handleDisplayChange('pregnancy', handleChange)}
                                       onBlur={handleBlur}
                                       className={touched["pregnancy.currently_pregnant"] && errors["pregnancy.currently_pregnant"] ? "is-invalid" : null}>
                             {select_options.map((item, i) => (
@@ -260,7 +283,7 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                         <ErrorMessage name="pregnancy.currently_pregnant"/>
                     </Form.Group>
 
-                    <Form.Group controlId="pregnancy.pregnancy_trimester">
+                    <Form.Group controlId="pregnancy.pregnancy_trimester" className="d-none hide_pregnancy">
                         <Form.Label>In what stage is your
                             pregnancy?</Form.Label>
                         <Form.Control name="pregnancy.pregnancy_trimester" as="select" onChange={handleChange}
@@ -290,7 +313,8 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                     <Form.Group controlId="has_preexisting_conditions">
                         <Form.Label>Do you have any pre-existing medical
                             conditions?</Form.Label>
-                        <Form.Control name="has_preexisting_conditions" as="select" onChange={handleChange}
+                        <Form.Control name="has_preexisting_conditions" as="select"
+                                      onChange={handleDisplayChange('preexisting_conditions', handleChange)}
                                       onBlur={handleBlur}
                                       className={touched["has_preexisting_conditions"] && errors["has_preexisting_conditions"] ? "is-invalid" : null}>
                             {select_options.map((item, i) => (
@@ -302,7 +326,8 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
                     {preexisting_conditions.map((condition, i) => (
                         <Form.Group controlId={`preexisting_conditions.${condition.id}`}
-                                    key={`preexisting_conditions.${condition.id}`}>
+                                    key={`preexisting_conditions.${condition.id}`}
+                                    className="d-none hide_preexisting_conditions">
                             <Form.Label>{condition.name}</Form.Label>
                             <Form.Control name={`preexisting_conditions.${condition.id}`} as="select"
                                           onChange={handleChange} onBlur={handleBlur}
