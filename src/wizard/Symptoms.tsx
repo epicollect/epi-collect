@@ -37,7 +37,7 @@ const DatePickerField = ({...props}) => {
 
 type SymptomsFormProps = {
     initialData?: FormValues,
-    onComplete: (values: FormValues) => void;
+    onComplete: (values: FormValues) => void
 }
 
 const SymptomsForm = (props: SymptomsFormProps) => {
