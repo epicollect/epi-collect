@@ -1,5 +1,6 @@
 import React from 'react';
-import {ErrorMessage, Field, Form, Formik, useField, useFormikContext} from "formik";
+import {ErrorMessage, Formik, useField, useFormikContext} from "formik";
+import {Button, Form} from 'react-bootstrap';
 import * as Yup from 'yup';
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -28,6 +29,8 @@ const DatePickerField = ({...props}) => {
             {...props}
             selected={(field.value && new Date(field.value)) || null}
             dateFormat="dd/MM/yyyy"
+            wrapperClassName="form-control"
+            className="form-control"
             onChange={val => {
                 setFieldValue(field.name, val);
             }}
@@ -150,112 +153,170 @@ const SymptomsForm = (props: SymptomsFormProps) => {
                 props.onComplete(values);
             }}
         >
-            <Form>
+            {({
+                  values,
+                  errors,
+                  touched,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isSubmitting
+              }) => (
+                <Form onSubmit={handleSubmit}>
 
-                <label htmlFor="age">Age</label>
-                <Field name="age" as="select">
-                    <option value=""/>
-                    {Array.apply(18, Array(130)).map(function (x, i) {
-                        return <option key={i} value={i}>{i}</option>;
-                    })}
-                </Field>
-                <ErrorMessage name="age"/>
+                    <Form.Group controlId="age">
+                        <Form.Label>Age</Form.Label>
+                        <Form.Control name="age" as="select" onChange={handleChange} onBlur={handleBlur}
+                                      className={touched.age && errors.age ? "is-invalid" : null}>
+                            <option value=""/>
+                            {Array.apply(18, Array(130)).map(function (x, i) {
+                                return <option key={i} value={i}>{i}</option>;
+                            })}
+                        </Form.Control>
+                        <ErrorMessage name="age"/>
+                    </Form.Group>
 
-                <label htmlFor="gender">Gender</label>
-                <Field name="gender" as="select">
-                    <option key="" value=""/>
-                    <option key="female" value="female">Female</option>
-                    <option key="male" value="male">Male</option>
-                    <option key="other" value="other">Other</option>
-                </Field>
-                <ErrorMessage name="gender"/>
+                    <Form.Group controlId="gender">
+                        <Form.Label>Gender</Form.Label>
+                        <Form.Control name="gender" as="select" onChange={handleChange} onBlur={handleBlur}
+                                      className={touched.gender && errors.gender ? "is-invalid" : null}>
+                            <option key="" value=""/>
+                            <option key="female" value="female">Female</option>
+                            <option key="male" value="male">Male</option>
+                            <option key="other" value="other">Other</option>
+                        </Form.Control>
+                        <ErrorMessage name="gender"/>
+                    </Form.Group>
 
-                <label htmlFor="has_symptoms">Do you currently have or have you had symptoms?</label>
-                <Field name="has_symptoms" as="select">
-                    {select_options.map((item, i) => (
-                        <option key={item.id} value={item.id}>{item.value}</option>
-                    ))}
-                </Field>
-                <ErrorMessage name="has_symptoms"/>
-
-                <label htmlFor="diagnosis.covid19_diagnosed">Have you been diagnosed with COVID-19?</label>
-                <Field name="diagnosis.covid19_diagnosed" as="select">
-                    {select_options.map((item, i) => (
-                        <option key={item.id} value={item.id}>{item.value}</option>
-                    ))}
-                </Field>
-                <ErrorMessage name="diagnosis.covid19_diagnosed"/>
-
-                <label htmlFor="diagnosis.covid19_diagnosis_date">When were you diagnosed?</label>
-                <DatePickerField name="diagnosis.covid19_diagnosis_date" maxDate={new Date()}/>
-                <ErrorMessage name="diagnosis.covid19_diagnosis_date"/>
-
-                <label htmlFor="diagnosis.first_symptoms_date">When did you first get symptoms?</label>
-                <DatePickerField name="diagnosis.first_symptoms_date" maxDate={new Date()}/>
-                <ErrorMessage name="diagnosis.first_symptoms_date"/>
-
-                <label htmlFor="diagnosis.end_date">If you've recovered, when did you recover?</label>
-                <DatePickerField name="diagnosis.end_date" maxDate={new Date()}/>
-                <ErrorMessage name="diagnosis.end_date"/>
-
-                {symptoms.map((symptom, i) => (
-                    <div key={`symptoms.${symptom.id}`}>
-                        <label htmlFor={`symptoms.${symptom.id}`}>{symptom.name}</label>
-                        <Field name={`symptoms.${symptom.id}`} as="select">
+                    <Form.Group controlId="has_symptoms">
+                        <Form.Label>Do you currently have or have you had symptoms?</Form.Label>
+                        <Form.Control name="has_symptoms" as="select" onChange={handleChange} onBlur={handleBlur}
+                                      className={touched.has_symptoms && errors.has_symptoms ? "is-invalid" : null}>
                             {select_options.map((item, i) => (
                                 <option key={item.id} value={item.id}>{item.value}</option>
                             ))}
-                        </Field>
-                        <ErrorMessage name={`symptoms.${symptom.id}`}/>
-                    </div>
-                ))}
+                        </Form.Control>
+                        <ErrorMessage name="has_symptoms"/>
+                    </Form.Group>
 
-                <label htmlFor="pregnancy.currently_pregnant">Are you currently pregnant?</label>
-                <Field name="pregnancy.currently_pregnant" as="select">
-                    {select_options.map((item, i) => (
-                        <option key={item.id} value={item.id}>{item.value}</option>
-                    ))}
-                </Field>
-                <ErrorMessage name="pregnancy.currently_pregnant"/>
-
-                <label htmlFor="pregnancy.pregnancy_trimester">In what stage is your pregnancy?</label>
-                <Field name="pregnancy.pregnancy_trimester" as="select">
-                    <option key="" value=""/>
-                    <option key="first_trimester" value="first_trimester">0-12 weeks</option>
-                    <option key="second_trimester" value="second_trimester">13-26 weeks</option>
-                    <option key="third_trimester" value="third_trimester">27 or more weeks</option>
-                </Field>
-                <ErrorMessage name="pregnancy.pregnancy_trimester"/>
-
-                <label htmlFor="pregnancy.post_partum">Have you given birth in the last 6 weeks?</label>
-                <Field name="pregnancy.post_partum" as="select">
-                    <option key="" value=""/>
-                    <option key="1" value="1">Yes</option>
-                    <option key="0" value="0">No</option>
-                </Field>
-                <ErrorMessage name="pregnancy.post_partum"/>
-
-                <label htmlFor="has_preexisting_conditions">Do you have any pre-existing medical conditions?</label>
-                <Field name="has_preexisting_conditions" as="select">
-                    {select_options.map((item, i) => (
-                        <option key={item.id} value={item.id}>{item.value}</option>
-                    ))}
-                </Field>
-                <ErrorMessage name="has_preexisting_conditions"/>
-
-                {preexisting_conditions.map((condition, i) => (
-                    <div key={`preexisting_conditions.${condition.id}`}>
-                        <label htmlFor={`preexisting_conditions.${condition.id}`}>{condition.name}</label>
-                        <Field name={`preexisting_conditions.${condition.id}`} as="select">
+                    <Form.Group controlId="diagnosis.covid19_diagnosed">
+                        <Form.Label>Have you been diagnosed with
+                            COVID-19?</Form.Label>
+                        <Form.Control name="diagnosis.covid19_diagnosed" as="select" onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      className={touched['diagnosis.covid19_diagnosed'] && errors['diagnosis.covid19_diagnosed'] ? "is-invalid" : null}>
                             {select_options.map((item, i) => (
                                 <option key={item.id} value={item.id}>{item.value}</option>
                             ))}
-                        </Field>
-                        <ErrorMessage name={`preexisting_conditions.${condition.id}`}/>
-                    </div>
-                ))}
-                <button type="submit">Submit</button>
-            </Form>
+                        </Form.Control>
+                        <ErrorMessage name="diagnosis.covid19_diagnosed"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="diagnosis.covid19_diagnosis_date">
+                        <Form.Label>When were you diagnosed?</Form.Label>
+                        <DatePickerField name="diagnosis.covid19_diagnosis_date" maxDate={new Date()}
+                                         value={values['diagnosis.covid19_diagnosis_date']}/>
+                        <ErrorMessage name="diagnosis.covid19_diagnosis_date"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="diagnosis.first_symptoms_date">
+                        <Form.Label>When did you first get
+                            symptoms?</Form.Label>
+                        <DatePickerField name="diagnosis.first_symptoms_date" maxDate={new Date()}
+                                         value={values['diagnosis.first_symptoms_date']}/>
+                        <ErrorMessage name="diagnosis.first_symptoms_date"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="diagnosis.end_date">
+                        <Form.Label>If you've recovered, when did you recover?</Form.Label>
+                        <DatePickerField name="diagnosis.end_date" maxDate={new Date()}
+                                         value={values['diagnosis.end_date']}/>
+                        <ErrorMessage name="diagnosis.end_date"/>
+                    </Form.Group>
+
+                    {symptoms.map((symptom, i) => (
+                        <Form.Group controlId={`symptoms.${symptom.id}`} key={`symptoms.${symptom.id}`}>
+                            <Form.Label>{symptom.name}</Form.Label>
+                            <Form.Control name={`symptoms.${symptom.id}`} as="select" onChange={handleChange}
+                                          onBlur={handleBlur}
+                                          className={touched[`symptoms.${symptom.id}`] && errors[`symptoms.${symptom.id}`] ? "is-invalid" : null}>
+                                {select_options.map((item, i) => (
+                                    <option key={item.id} value={item.id}>{item.value}</option>
+                                ))}
+                            </Form.Control>
+                            <ErrorMessage name={`symptoms.${symptom.id}`}/>
+                        </Form.Group>
+                    ))}
+
+                    <Form.Group controlId="pregnancy.currently_pregnant">
+                        <Form.Label>Are you currently pregnant?</Form.Label>
+                        <Form.Control name="pregnancy.currently_pregnant" as="select" onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      className={touched["pregnancy.currently_pregnant"] && errors["pregnancy.currently_pregnant"] ? "is-invalid" : null}>
+                            {select_options.map((item, i) => (
+                                <option key={item.id} value={item.id}>{item.value}</option>
+                            ))}
+                        </Form.Control>
+                        <ErrorMessage name="pregnancy.currently_pregnant"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="pregnancy.pregnancy_trimester">
+                        <Form.Label>In what stage is your
+                            pregnancy?</Form.Label>
+                        <Form.Control name="pregnancy.pregnancy_trimester" as="select" onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      className={touched["pregnancy.pregnancy_trimester"] && errors["pregnancy.pregnancy_trimester"] ? "is-invalid" : null}>
+                            <option key="" value=""/>
+                            <option key="first_trimester" value="first_trimester">0-12 weeks</option>
+                            <option key="second_trimester" value="second_trimester">13-26 weeks</option>
+                            <option key="third_trimester" value="third_trimester">27 or more weeks</option>
+                        </Form.Control>
+                        <ErrorMessage name="pregnancy.pregnancy_trimester"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="pregnancy.post_partum">
+                        <Form.Label>Have you given birth in the last 6
+                            weeks?</Form.Label>
+                        <Form.Control name="pregnancy.post_partum" as="select" onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      className={touched["pregnancy.post_partum"] && errors["pregnancy.post_partum"] ? "is-invalid" : null}>
+                            <option key="" value=""/>
+                            <option key="1" value="1">Yes</option>
+                            <option key="0" value="0">No</option>
+                        </Form.Control>
+                        <ErrorMessage name="pregnancy.post_partum"/>
+                    </Form.Group>
+
+                    <Form.Group controlId="has_preexisting_conditions">
+                        <Form.Label>Do you have any pre-existing medical
+                            conditions?</Form.Label>
+                        <Form.Control name="has_preexisting_conditions" as="select" onChange={handleChange}
+                                      onBlur={handleBlur}
+                                      className={touched["has_preexisting_conditions"] && errors["has_preexisting_conditions"] ? "is-invalid" : null}>
+                            {select_options.map((item, i) => (
+                                <option key={item.id} value={item.id}>{item.value}</option>
+                            ))}
+                        </Form.Control>
+                        <ErrorMessage name="has_preexisting_conditions"/>
+                    </Form.Group>
+
+                    {preexisting_conditions.map((condition, i) => (
+                        <Form.Group controlId={`preexisting_conditions.${condition.id}`}
+                                    key={`preexisting_conditions.${condition.id}`}>
+                            <Form.Label>{condition.name}</Form.Label>
+                            <Form.Control name={`preexisting_conditions.${condition.id}`} as="select"
+                                          onChange={handleChange} onBlur={handleBlur}
+                                          className={touched[`preexisting_conditions.${condition.id}`] && errors[`preexisting_conditions.${condition.id}`] ? "is-invalid" : null}>
+                                {select_options.map((item, i) => (
+                                    <option key={item.id} value={item.id}>{item.value}</option>
+                                ))}
+                            </Form.Control>
+                            <ErrorMessage name={`preexisting_conditions.${condition.id}`}/>
+                        </Form.Group>
+                    ))}
+                    <Button type="submit" disabled={isSubmitting} variant="primary">Submit</Button>
+                </Form>
+            )}
         </Formik>
     );
 };
