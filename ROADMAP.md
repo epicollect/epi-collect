@@ -75,7 +75,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     
 <br />
     
-Any V1 task can be picked up by an independent contributor. Please join our Slack.
+Any V1 task can be picked up by an independent contributor.
 
 - [ ] Make data point editing UI mobile friendly (link to issue, looking for contributor)
 - [ ] Add pipeline to ingest Facebook location data (looking for contributor)
@@ -86,6 +86,8 @@ Any V1 task can be picked up by an independent contributor. Please join our Slac
 
 <details>
     <summary>Expected completion: May 1st, 2020</summary>
+
+<br />
 
 - [ ] Notify those who are infected or recovering of newly relevant traces
 - [ ] Notify those at risk of coming into contact with an infected trace
