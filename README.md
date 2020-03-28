@@ -1,6 +1,9 @@
 <div align="center">
-  <h1>🌏🌎🌍</h1>
-	<h1>Epi-Collect</h1>
+	<h1>
+		🌏🌎🌍
+		<br />
+		Epi-Collect
+	</h1>
 	<p>
 		<b>Epi-Collect uses Google Takeout location data to build a global viral infection contact tracing dataset.</b>
 	</p>
