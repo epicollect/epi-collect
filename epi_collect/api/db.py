@@ -60,7 +60,7 @@ class Activity(Base):
 
 
 def get_db_credentials_aws():
-    secret_name = "dbcredentials"
+    secret_name = "db-secrets-epi-collect"
     secret = get_aws_secret(secret_name)
 
     return secret['username'], secret['password'], secret['host'], secret['port'], 'epicollect'
