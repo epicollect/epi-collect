@@ -94,4 +94,4 @@ Any V1 task can be picked up by an independent contributor. Please join our Slac
 
 # Far future
 
-- [ ] Use Homomorphic encryption for location-based tracing ([more information](https://cryptovillage.org/wp-content/uploads/2019/04/GeoLocation.pdf))
+- [ ] Use homomorphic encryption for privacy-respecting tracing ([more information](https://cryptovillage.org/wp-content/uploads/2019/04/GeoLocation.pdf))
