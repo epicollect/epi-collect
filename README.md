@@ -1,4 +1,4 @@
-# EpiCollect
+# 🌏🌎🌎 EpiCollect
 
 [EpiCollect](https://epicollect.io) uses [Google Takeout](https://en.wikipedia.org/wiki/Google_Takeout) location data to build a global viral infection [contact tracing](https://www.who.int/features/qa/contact-tracing/en/) dataset.
 
