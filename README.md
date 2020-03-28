@@ -31,7 +31,7 @@
 Make sure you have `yarn` and `virtualenv` installed.
 
 ```bash
-git clone git@github.com:larsmennen/epi-collect.git
+git clone git@github.com:epicollect/epi-collect.git
 cd epi-collect
 yarn install
 virtualenv --python=python3.6 venv
