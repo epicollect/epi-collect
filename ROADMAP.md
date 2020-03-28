@@ -1,9 +1,9 @@
 # V0 
 Expected completion: March 29th, 2020
 
-- [ ] Parse location data uploads from Google Takeout
-- [ ] Allow users to remove location data points using polygons
-    - [ ] (v1) Event listeners on saved polygons give a React warning
+- [x] Parse location data uploads from Google Takeout
+- [x] Allow users to remove location data points using polygons
+    - [ ] Fix event listeners on saved polygons give a React warning
 - [ ] Require recaptcha for submission
 - [ ] Buy domain name and set up
 - [ ] When trying to submit on mobile show message
@@ -16,7 +16,7 @@ Expected completion: March 29th, 2020
     - [ ] Upload progress
       - [ ] Make it go to 95% while backend processes
   - [ ] Review and filter data
-    - [ ] Handle case where the user doesn’t have any data in selected period.
+    - [ ] Handle case where the user doesn’t have any data in selected period
     - [ ] Polish buttons, map, and timeline
   - [ ] Add symptoms
     - [ ] Emphasize these are WHO questions
@@ -35,8 +35,8 @@ Expected completion: March 29th, 2020
   - [ ] Contributing guidelines
 - [ ] Deploy and test on production
 - [ ] Allow user to delete their data
-  - Show token
-  - Optionally add an email address and phone number
+  - [ ] Show token
+  - [ ] Optionally add an email address and phone number
 - [ ] Create Slack workspace and link to it
 - [ ] Add Google Analytics
 - [ ] Add Sentry to frontend and backend
