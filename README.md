@@ -53,6 +53,16 @@ In this setup, `make run-db-local` will spin up a local PostGIS instance with th
 2. Using `docker-compose` in which case the same docker containers as in the actual deployment are created, 
 but they are span up locally using `docker-compose`. The database doesn't work in this setup.
 
+### Testing
+
+#### Manual
+
+A Google Takeout zip file with location data is located unter `tests/data/sample_location_history.zip`.
+
+#### Automatic
+
+See `tests/test_api.py`.
+
 ### Deployment
 
 We deploy using `make deploy` (you need AWS access for this) which builds the following docker containers:
