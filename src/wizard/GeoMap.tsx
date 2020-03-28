@@ -40,7 +40,7 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
         // The unit for domain and values will be days from the day *before* min_timestamp, up until the day *after* max_timestamp
         const min_days_since_epoch = Math.floor((new Date(min_timestamp).getTime()) / MS_IN_A_DAY);
         const max_days_since_epoch = Math.ceil((new Date(max_timestamp).getTime()) / MS_IN_A_DAY);
-        console.log(props.values);
+        
         this.state = {
             overlays: props.overlays !== undefined ? props.overlays : [],
             markers: [],

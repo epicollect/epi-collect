@@ -1,16 +1,13 @@
 import argparse
-import base64
-import json
 import os
 
-import boto3
-from botocore.exceptions import ClientError
 from geoalchemy2 import Geography
 from sqlalchemy import create_engine, Column, DateTime, ForeignKey, Integer, String
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 from epi_collect.api.data_classes import LocationDatum, ActivityDatum
+from epi_collect.api.utils import get_aws_secret
 
 Base = declarative_base()
 Session = sessionmaker()
@@ -64,25 +61,7 @@ class Activity(Base):
 
 def get_db_credentials_aws():
     secret_name = "dbcredentials"
-    region_name = "us-east-2"
-
-    session = boto3.session.Session()
-    client = session.client(
-        service_name='secretsmanager',
-        region_name=region_name
-    )
-
-    try:
-        get_secret_value_response = client.get_secret_value(
-            SecretId=secret_name
-        )
-    except ClientError as e:
-        raise e
-    else:
-        if 'SecretString' in get_secret_value_response:
-            secret = json.loads(get_secret_value_response['SecretString'])
-        else:
-            secret = base64.b64decode(get_secret_value_response['SecretBinary'])
+    secret = get_aws_secret(secret_name)
 
     return secret['username'], secret['password'], secret['host'], secret['port'], 'epicollect'
 

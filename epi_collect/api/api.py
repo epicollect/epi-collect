@@ -8,11 +8,13 @@ import tempfile
 import zipfile
 from typing import List
 
+import requests
 from flask import Flask, request
 from werkzeug.utils import secure_filename
 
 from epi_collect.api.data_classes import LocationDatum, ActivityDatum
 from epi_collect.api.db import get_db_connection, Location, Activity, User, UserData
+from epi_collect.api.utils import get_aws_secret
 
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
@@ -20,6 +22,10 @@ app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
 ALLOWED_GOOGLE_TAKEOUT_EXTENSIONS = ['tgz', 'zip', 'json']
 UNZIPPABLE_EXTENSIONS = ['tgz', 'zip']
 GOOGLE_TAKEOUT_PATH = 'Takeout/Location History/Location History.json'
+
+credentials_source = os.environ.get('CREDENTIALS_SOURCE', 'local')
+if credentials_source == 'aws':
+    RECAPTCHA_SECRET = get_aws_secret('recaptcha')['secret_key']
 
 # Do not include any data before this point, 2 weeks before first probable case according to WHO
 EARLIEST_DATETIME = int(
@@ -148,10 +154,22 @@ def save():
     try:
         # Process data
         data = request.json
+
+        # Locally, skip captcha verification
+        if credentials_source != 'local':
+            # Verify captcha first
+            captcha_res = requests.post('https://www.google.com/recaptcha/api/siteverify',
+                                        {'secret': RECAPTCHA_SECRET, 'response': data['captcha_token']})
+            captcha_res_json = captcha_res.json()
+            if captcha_res_json['success'] == False:
+                return {'error': f'Could not save data; captcha token invalid'}, 400
+            else:
+                logging.info('Captcha verified')
+
+        # Extract user-provided data
         locations = [LocationDatum(**l) for l in data['locations']]
         user_data_dict = fill_missing_user_data_values(data['user_data'])
         user_data_dict = flatten_dict(user_data_dict)
-        print(user_data_dict)
         user_data_dict = {k: v for k, v in user_data_dict.items() if v}
 
         # Save data
