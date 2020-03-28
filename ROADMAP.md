@@ -16,9 +16,10 @@
 - [x] Allow users to remove location data points using polygons
     - [ ] Fix event listeners on saved polygons give a React warning
 - [ ] Require recaptcha for submission
-- [ ] Buy domain name and set up
+- [x] Buy domain name and set up
 - [ ] When trying to submit on mobile show message
-- [ ] AWS firewall / request filtering
+- [x] AWS firewall / request filtering
+- [ ] Enable HTTPS
 - [ ] Polish UI
   - [ ] Home page
     - [ ] GIF of user going through steps 
