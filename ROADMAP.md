@@ -1,4 +1,4 @@
-[Contributor Slack Workspace](https://epi-collect.slack.com)
+Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
 | Milestone                         | Active Collaborators |
 | ---                               | --- |
@@ -52,7 +52,7 @@
 - [ ] Allow user to delete their data
   - [ ] Show token
   - [ ] Optionally add an email address and phone number
-- [ ] Create Slack workspace and link to it
+- [x] Create Slack workspace and link to it
     - [ ] #dataset
     - [ ] #engineers
     - [ ] Workspace greeting
