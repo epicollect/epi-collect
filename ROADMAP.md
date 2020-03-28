@@ -1,5 +1,16 @@
-# V0 
-Expected completion: March 29th, 2020
+[Contributor Slack Workspace](https://epi-collect.slack.com)
+
+| Milestone                         | Committed Collaborators |
+| ---                               | --- |
+| [__V0__](./ROADMAP.md#V0)         | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
+| [__V1__](./ROADMAP.md#V1)         | None yet |
+| [__V2__](./ROADMAP.md#V2)         | None yet |
+
+# V0
+<details>
+    <summary>
+        Expected completion: March 29th, 2020
+    </summary>
 
 - [x] Parse location data uploads from Google Takeout
 - [x] Allow users to remove location data points using polygons
@@ -7,8 +18,7 @@ Expected completion: March 29th, 2020
 - [ ] Require recaptcha for submission
 - [ ] Buy domain name and set up
 - [ ] When trying to submit on mobile show message
-- [x] AWS firewall / request filtering
-- [ ] Enable HTTPS
+- [ ] AWS firewall / request filtering
 - [ ] Polish UI
   - [ ] Home page
     - [ ] GIF of user going through steps 
@@ -40,6 +50,9 @@ Expected completion: March 29th, 2020
   - [ ] Show token
   - [ ] Optionally add an email address and phone number
 - [ ] Create Slack workspace and link to it
+    - [ ] #dataset
+    - [ ] #engineers
+    - [ ] Workspace greeting
 - [ ] Update GitHub organization
 - [ ] Add Google Analytics
 - [ ] Add Sentry to frontend and backend
@@ -47,16 +60,22 @@ Expected completion: March 29th, 2020
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
 - [ ] Update helpwithcovid.com description
+</details>
 
 # V1
-
-Expected completion: April 15th, 2020
-
+<details>
+    <summary>
+        Expected completion: April 15th, 2020
+    </summary>
 Any V1 task can be picked up by an independent contributor. Please join our Slack.
 
 - [ ] Make data point editing UI mobile friendly (link to issue, looking for contributor)
 - [ ] Add pipeline to ingest Facebook location data (looking for contributor)
+</details>
+
 
 # V2
 
-Expected completion: May 1st, 2020
+<details>
+    <summary>Expected completion: May 1st, 2020</summary>
+</details>
