@@ -7,7 +7,7 @@ Expected completion: March 29th, 2020
 - [ ] Require recaptcha for submission
 - [ ] Buy domain name and set up
 - [ ] When trying to submit on mobile show message
-- [ ] AWS firewall / request filtering
+- [x] AWS firewall / request filtering
 - [ ] Polish UI
   - [ ] Home page
     - [ ] GIF of user going through steps 
