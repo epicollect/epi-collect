@@ -6,7 +6,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 | [__V1__](./ROADMAP.md#V1)         | Tasks available, contributors needed |
 | [__V2__](./ROADMAP.md#V2)         | Tasks available, contributors needed |
 
-# V0
+# V0 [in progress]
 <details>
     <summary>
         Expected completion: March 29th, 2020
@@ -67,18 +67,19 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 
 </details>
 
-# V1
+# V1 [needs contributors]
 <details>
-    <summary>
-        Expected completion: April 15th, 2020
-    </summary>
+
+<summary>
+Expected completion: April 15th, 2020
+</summary>
     
 <br />
     
-Any V1 task can be picked up by an independent contributor.
+- [ ] Make data point editing UI mobile friendly
+- [ ] Add pipeline to ingest Facebook location data
+- [ ] Unzip Google Takeout locally without uploading
 
-- [ ] Make data point editing UI mobile friendly (link to issue, looking for contributor)
-- [ ] Add pipeline to ingest Facebook location data (looking for contributor)
 </details>
 
 
