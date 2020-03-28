@@ -38,6 +38,7 @@ Expected completion: March 29th, 2020
   - [ ] Show token
   - [ ] Optionally add an email address and phone number
 - [ ] Create Slack workspace and link to it
+- [ ] Update GitHub organization
 - [ ] Add Google Analytics
 - [ ] Add Sentry to frontend and backend
 - [ ] Find and partner with first scientific user of the dataset
