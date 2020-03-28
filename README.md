@@ -18,8 +18,9 @@ pip install -r requirements.txt
 
 To start:
 ```bash
-make start-dev
-make start-db-local
+make run-dev
+export PYTHONPATH="$PWD"
+make run-db-local
 ```
 
 To stop:
@@ -47,7 +48,7 @@ database for persistent storage.
 Locally you can run in two ways:
 
 1. Using `yarn` and `flask` (`make start-dev`), in which case all traffic on `/api` is routed to `flask`.
-In this setup, `make start-db-local` will spin up a local PostGIS instance with the correct schema.
+In this setup, `make run-db-local` will spin up a local PostGIS instance with the correct schema.
 
 2. Using `docker-compose` in which case the same docker containers as in the actual deployment are created, 
 but they are span up locally using `docker-compose`. The database doesn't work in this setup.
