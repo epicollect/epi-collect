@@ -1,14 +1,26 @@
-# 🌏🌎🌍 Epi-Collect
+<div align="center">
+	<h1>
+		<a href="https://epi-collect.org" rel="noopener" target="_blank">Epi-Collect</a>
+	</h1>
+	<p>
+		Epi-Collect uses location data from <a href="https://en.wikipedia.org/wiki/Google_Takeout" rel="noopener" target="_blank">Google Takeout</a>
+		<br />
+		to build an open source <a href="https://www.who.int/features/qa/contact-tracing/en/" rel="noopener" target="_blank">contact tracing</a> dataset.
+	</p>
+	<p>
+		<a href="https://epi-collect.org" target="_blank" rel="noopener">Website</a>
+		• <a href="https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg" target="_blank" rel="noopener">Slack</a>
+		• <a href="./ROADMAP.md">Roadmap</a>
+	</p>
+</div>
 
-[Website](https://epi-collect.org) • [Slack](https://epi-collect.slack.com) • [Contributors](./CONTRIBUTING.md) 
+
+## [Goals](./ROADMAP.md)
 
 | Current Milestone                 | Current Researchers|
 | ---                               | --- |
 | __V0__ ([Roadmap](./ROADMAP.md))  | __0__ ([Become a researcher](./RESEARCHERS.md)) |
 
-[Epi-Collect](https://epi-collect.org) uses [Google Takeout](https://en.wikipedia.org/wiki/Google_Takeout) location data to build a global viral infection [contact tracing](https://www.who.int/features/qa/contact-tracing/en/) dataset.
-
-## [Goals](./ROADMAP.md)
 
 - Establish privacy-respecting [UX best practices](./PRIVACY.md) for location data donation
 - Establish a [FOSS dataset standard](./CONTACT_TRACING_DATASET_FORMAT.md) for contact tracing

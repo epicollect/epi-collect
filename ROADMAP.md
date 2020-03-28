@@ -1,6 +1,6 @@
-[Contributor Slack Workspace](https://epi-collect.slack.com)
+Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
-| Milestone                         | Committed Collaborators |
+| Milestone                         | Active Collaborators |
 | ---                               | --- |
 | [__V0__](./ROADMAP.md#V0)         | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
 | [__V1__](./ROADMAP.md#V1)         | None yet |
@@ -11,6 +11,8 @@
     <summary>
         Expected completion: March 29th, 2020
     </summary>
+    
+<br/>
 
 - [x] Parse location data uploads from Google Takeout
 - [x] Allow users to remove location data points using polygons
@@ -19,10 +21,11 @@
 - [x] Buy domain name and set up
 - [ ] When trying to submit on mobile show message
 - [x] AWS firewall / request filtering
-- [ ] Enable HTTPS
+- [x] Enable HTTPS
 - [ ] Polish UI
   - [ ] Home page
-    - [ ] GIF of user going through steps 
+    - [ ] GIF of user going through steps
+    - [ ] Include count of traces in the database
   - [ ] Upload data step
     - [ ] Show the user how to upload via GIFs
     - [ ] Upload progress
@@ -50,7 +53,7 @@
 - [ ] Allow user to delete their data
   - [ ] Show token
   - [ ] Optionally add an email address and phone number
-- [ ] Create Slack workspace and link to it
+- [x] Create Slack workspace and link to it
     - [ ] #dataset
     - [ ] #engineers
     - [ ] Workspace greeting
@@ -61,6 +64,7 @@
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
 - [ ] Update helpwithcovid.com description
+
 </details>
 
 # V1
@@ -68,6 +72,9 @@
     <summary>
         Expected completion: April 15th, 2020
     </summary>
+    
+<br />
+    
 Any V1 task can be picked up by an independent contributor. Please join our Slack.
 
 - [ ] Make data point editing UI mobile friendly (link to issue, looking for contributor)
@@ -79,4 +86,12 @@ Any V1 task can be picked up by an independent contributor. Please join our Slac
 
 <details>
     <summary>Expected completion: May 1st, 2020</summary>
+
+- [ ] Notify those who are infected or recovering of newly relevant traces
+- [ ] Notify those at risk of coming into contact with an infected trace
+
 </details>
+
+# Far future
+
+- [ ] Use homomorphic encryption for privacy-respecting tracing ([more information](https://cryptovillage.org/wp-content/uploads/2019/04/GeoLocation.pdf))
