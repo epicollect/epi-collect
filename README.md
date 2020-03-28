@@ -1,17 +1,16 @@
 <div align="center">
 	<h1>
-		🌏🌎🌍
-		<br />
 		Epi-Collect
 	</h1>
 	<p>
-		<b>Epi-Collect uses Google Takeout location data to build a global viral infection contact tracing dataset.</b>
+		<b>Epi-Collect uses Google Takeout location data to build an open source contact tracing dataset.</b>
 	</p>
-	<br>
-	<br>
+	<p>
+		<a href="https://epi-collect.org" target="_blank" rel="noopener">Website</a>
+		• <a href="https://epi-collect.slack.com" target="_blank" rel="noopener">Slack</a>
+		• <a href="./CONTRIBUTING.md">Contributors</a>
+	</p>
 </div>
-
-[Website](https://epi-collect.org) • [Slack](https://epi-collect.slack.com) • [Contributors](./CONTRIBUTING.md)
 
 
 ## [Goals](./ROADMAP.md)
