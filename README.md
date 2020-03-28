@@ -1,5 +1,7 @@
 # EpiCollect
 
+Current Milestone: [V0](./ROADMAP.md)
+
 ## Setup
 
 Make sure you have `yarn` and `virtualenv` installed.
