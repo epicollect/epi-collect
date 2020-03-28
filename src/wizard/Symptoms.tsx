@@ -5,7 +5,6 @@ import * as Yup from 'yup';
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {FormValues, WizardStepProps} from "../types";
-import axios from 'axios';
 import {Redirect} from "react-router-dom";
 
 type SelectField = {
@@ -354,16 +353,7 @@ class Symptoms extends React.Component<WizardStepProps, {}> {
 
     handleComplete(values: FormValues) {
         this.props.data.user_data = values;
-        axios.post('/api/save', {
-            locations: this.props.data.locations,
-            user_data: this.props.data.user_data
-        })
-            .then((res) => {
-                this.props.onNavigate(undefined, '/wizard/completed', {locations: []});
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        this.props.onNavigate(undefined, '/wizard/confirm', this.props.data);
     }
 
     render() {
