@@ -1,9 +1,9 @@
 <div align="center">
 	<h1>
-		Epi-Collect
+		<a href="https://epi-collect.org" rel="noopener" target="_blank">Epi-Collect</a>
 	</h1>
 	<p>
-		<b>Epi-Collect uses Google Takeout location data to build an open source contact tracing dataset.</b>
+		<b>Epi-Collect uses location data from <a href="https://en.wikipedia.org/wiki/Google_Takeout" rel="noopener" target="_blank">Google Takeout</a> to build an open source <a href="https://www.who.int/features/qa/contact-tracing/en/" rel="noopener" target="_blank">contact tracing dataset</a>.</b>
 	</p>
 	<p>
 		<a href="https://epi-collect.org" target="_blank" rel="noopener">Website</a>
