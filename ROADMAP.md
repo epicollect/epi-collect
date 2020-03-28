@@ -1,10 +1,10 @@
 Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
-| Milestone                         | Active Collaborators |
+| Milestone                         | Active Contributors |
 | ---                               | --- |
 | [__V0__](./ROADMAP.md#V0)         | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
-| [__V1__](./ROADMAP.md#V1)         | None yet |
-| [__V2__](./ROADMAP.md#V2)         | None yet |
+| [__V1__](./ROADMAP.md#V1)         | Tasks available, contributors needed |
+| [__V2__](./ROADMAP.md#V2)         | Tasks available, contributors needed |
 
 # V0
 <details>
