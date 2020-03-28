@@ -33,6 +33,7 @@ Expected completion: March 29th, 2020
   - [ ] Contact tracing data design
   - [ ] Outreach efforts
   - [ ] Contributing guidelines
+  - [ ] Privacy best practices
 - [ ] Deploy and test on production
 - [ ] Allow user to delete their data
   - [ ] Show token
