@@ -1,4 +1,4 @@
-# 🌏🌎🌎 Epi-Collect
+# 🌏🌎🌍 Epi-Collect
 
 [Website](https://epi-collect.org) • [Slack](https://epi-collect.slack.com) • [Contributors](./CONTRIBUTING.md) 
 
@@ -8,14 +8,13 @@
 
 [Epi-Collect](https://epi-collect.org) uses [Google Takeout](https://en.wikipedia.org/wiki/Google_Takeout) location data to build a global viral infection [contact tracing](https://www.who.int/features/qa/contact-tracing/en/) dataset.
 
-It's immediate goals are to
+## Goals
+
 - Establish privacy-respecting [UX best practices](./PRIVACY.md) for location data donation
 - Establish a [FOSS dataset standard](./CONTACT_TRACING_DATASET_FORMAT.md) for contact tracing
 - Enable researchers to model the spread of COVID-19 with donated data
 
-Eventually, we want to
-- Notify infected and recovered users how they might've gotten infected
-- Notify vulnerable populations of the potential for infection
+[Roadmap](./ROADMAP.md)
 
 ## Setup
 
