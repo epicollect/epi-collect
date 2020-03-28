@@ -24,7 +24,8 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 - [x] Enable HTTPS
 - [ ] Polish UI
   - [ ] Home page
-    - [ ] GIF of user going through steps 
+    - [ ] GIF of user going through steps
+    - [ ] Include count of traces in the database
   - [ ] Upload data step
     - [ ] Show the user how to upload via GIFs
     - [ ] Upload progress
@@ -85,4 +86,12 @@ Any V1 task can be picked up by an independent contributor. Please join our Slac
 
 <details>
     <summary>Expected completion: May 1st, 2020</summary>
+
+- [ ] Notify those who are infected or recovering of newly relevant traces
+- [ ] Notify those at risk of coming into contact with an infected trace
+
 </details>
+
+# Far future
+
+- [ ] Use Homomorphic encryption for location-based tracing ([more information](https://cryptovillage.org/wp-content/uploads/2019/04/GeoLocation.pdf))
