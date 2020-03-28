@@ -1,6 +1,6 @@
 [Contributor Slack Workspace](https://epi-collect.slack.com)
 
-| Milestone                         | Committed Collaborators |
+| Milestone                         | Active Collaborators |
 | ---                               | --- |
 | [__V0__](./ROADMAP.md#V0)         | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
 | [__V1__](./ROADMAP.md#V1)         | None yet |
@@ -11,6 +11,8 @@
     <summary>
         Expected completion: March 29th, 2020
     </summary>
+    
+<br/>
 
 - [x] Parse location data uploads from Google Takeout
 - [x] Allow users to remove location data points using polygons
@@ -61,6 +63,7 @@
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
 - [ ] Update helpwithcovid.com description
+
 </details>
 
 # V1
@@ -68,6 +71,9 @@
     <summary>
         Expected completion: April 15th, 2020
     </summary>
+    
+<br />
+    
 Any V1 task can be picked up by an independent contributor. Please join our Slack.
 
 - [ ] Make data point editing UI mobile friendly (link to issue, looking for contributor)
