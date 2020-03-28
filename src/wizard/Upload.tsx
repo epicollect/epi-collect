@@ -3,6 +3,8 @@ import axios from 'axios';
 import {Progress} from 'reactstrap';
 import '../styles.scss';
 import {Location, WizardStepProps} from "../types";
+import {BrowserView, MobileView,} from "react-device-detect";
+import {Button} from "react-bootstrap";
 
 type UploadState = {
     selectedFile: File | null,
@@ -58,16 +60,25 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
 
     render() {
         return (
-            <div className="App">
-                <header className="App-header">
-                    <form onSubmit={(e) => this.onFormSubmit(e)}>
-                        <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)}/>
-                        <Progress max="100" color="success"
-                                  value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
-                        <button type="submit">Upload</button>
-                    </form>
-                </header>
-            </div>
+            <>
+                <MobileView>
+                    <p>You're accessing this website from a mobile device. This is not supported, please visit on a
+                        desktop/laptop. (text TODO)</p>
+                    <Button variant="primary" href="/">Back to home</Button>
+                </MobileView>
+                <BrowserView>
+                    <div className="App">
+                        <header className="App-header">
+                            <form onSubmit={(e) => this.onFormSubmit(e)}>
+                                <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)}/>
+                                <Progress max="100" color="success"
+                                          value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
+                                <button type="submit">Upload</button>
+                            </form>
+                        </header>
+                    </div>
+                </BrowserView>
+            </>
         )
     }
 }
