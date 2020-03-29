@@ -20,13 +20,13 @@ const InfoPage = () => {
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand href="/">EpiCollect</Navbar.Brand>
                 <Nav className="mr-auto">
-                    <LinkContainer to="/">
+                    <LinkContainer exact to="/">
                         <Nav.Link>Home</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/faq">
+                    <LinkContainer exact to="/faq">
                         <Nav.Link>FAQ</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/delete">
+                    <LinkContainer exact to="/delete">
                         <Nav.Link>Delete my data</Nav.Link>
                     </LinkContainer>
                 </Nav>

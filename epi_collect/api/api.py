@@ -1,9 +1,12 @@
 import bcrypt
 import sentry_sdk
+from sentry_sdk.integrations.flask import FlaskIntegration
+from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
 from epi_collect.api.tokens import generate_human_readable_token
 
-sentry_sdk.init("https://5f0ebb4296f04182a271364dc69c5b9c@sentry.io/5178703")
+sentry_sdk.init(dsn="https://5f0ebb4296f04182a271364dc69c5b9c@sentry.io/5178703",
+                integrations=[FlaskIntegration(), SqlalchemyIntegration()])
 
 import datetime
 import json
@@ -259,7 +262,8 @@ def delete():
             if user_id is None:
                 return {'error': f'Could not remove data; user-provided token invalid'}, 400
 
-            User.query.filter_by(id=user_id).delete()
+            user = session.query(User).filter_by(id=user_id).first()
+            session.delete(user)
             session.commit()
             return {'status': 'successful'}, 200
         except Exception as e:
