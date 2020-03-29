@@ -58,8 +58,11 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] #engineers
     - [ ] Workspace greeting
 - [ ] Update GitHub organization
-- [ ] Add Google Analytics
+- [x] Add Google Analytics
 - [x] Add Sentry to frontend and backend
+- [ ] Mailchimp mailing list
+    - [ ] Add to ingestion confirmation screen as optional
+    - [ ] Ensure double opt-in available
 - [ ] Find and partner with first scientific user of the dataset
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
