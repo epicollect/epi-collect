@@ -42,7 +42,8 @@ export type WizardState = {
     locations: Location[],
     user_data?: FormValues,
     geomap?: GeoMapState,
-    token?: string
+    token?: string,
+    no_valid_data?: boolean
 }
 
 export type WizardStepProps = {

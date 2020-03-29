@@ -28,7 +28,7 @@ from epi_collect.api.db import get_db_connection, Location, Activity, User, User
 from epi_collect.api.utils import get_aws_secret
 
 app = Flask(__name__)
-app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
+app.config['MAX_CONTENT_LENGTH'] = 256 * 1024 * 1024  # 256MB max per request
 
 # TODO: Clean this file up and split things out
 

@@ -167,26 +167,51 @@ const SocialSharing = (props: SocialSharingProps) => {
 };
 
 type CompletedState = {
-    show_social: boolean
+    show_social: boolean,
+    no_valid_data: boolean,
+    social_text: string
 }
 
 class Completed extends React.Component<WizardStepProps, CompletedState> {
 
     constructor(props: WizardStepProps) {
         super(props);
+        // If no_valid_data is set, the user had no data left after filtering, and was redirected here directly.
+        // In that case just show the social buttons with a custom text.
+        const no_valid_data = ('no_valid_data' in this.props.data && this.props.data.no_valid_data === true);
         this.state = {
-            show_social: false
+            show_social: no_valid_data,
+            no_valid_data: no_valid_data,
+            social_text: no_valid_data ?
+                'Help research into COVID-19 by donating your location data!' :
+                'I\'ve just donated my data to Epi-Collect to help research into COVID-19, donate yours too!'
         }
     }
 
     render() {
-        if ('token' in this.props.data
-            && (this.props.data.token as string).length !== 0) {
+        if (this.state.no_valid_data || ('token' in this.props.data
+            && (this.props.data.token as string).length !== 0)) {
+
+            let token_content;
+            if (this.state.no_valid_data === true) {
+                token_content =
+                    <p>Unfortunately your Google Takeout data doesn't contain any data in the COVID-19 outbreak period,
+                        so we are unable to use it. However, please do feel free to share this project on social
+                        media.</p>;
+            } else {
+                token_content = (
+                    <>
+                        <p>All done!</p>
+                        <p>Your token is:</p>
+                        <pre>{this.props.data.token}</pre>
+                    </>
+                )
+            }
 
             let main_content;
             if (this.state.show_social === true) {
                 main_content = <SocialSharing link="https://epi-collect.org"
-                                              text="I've just donated my data to Epi-Collect to help research into COVID-19, donate yours too!"
+                                              text={this.state.social_text}
                                               email_subject="Donating your data to help research into COVID-19"/>
             } else {
                 main_content =
@@ -196,9 +221,7 @@ class Completed extends React.Component<WizardStepProps, CompletedState> {
 
             return (
                 <div>
-                    <p>All done!</p>
-                    <p>Your token is:</p>
-                    <pre>{this.props.data.token}</pre>
+                    {token_content}
                     {main_content}
                 </div>
             )

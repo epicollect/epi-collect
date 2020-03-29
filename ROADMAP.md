@@ -35,7 +35,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [x] Upload progress
       - [x] Make it go to 95% while backend processes
   - [ ] Review and filter data
-    - [ ] Handle case where the user doesn’t have any data in selected period
+    - [x] Handle case where the user doesn’t have any data in selected period
     - [ ] Polish buttons, map, and timeline
   - [ ] Add symptoms
     - [ ] Emphasize these are WHO questions

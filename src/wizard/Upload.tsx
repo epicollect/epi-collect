@@ -52,9 +52,13 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
                 locations.push(loc);
             });
 
-            const state = this.props.data;
-            state.locations = locations;
-            this.props.onNavigate(undefined, '/wizard/select-data', state);
+            if (locations.length > 0) {
+                const state = this.props.data;
+                state.locations = locations;
+                this.props.onNavigate(undefined, '/wizard/select-data', state);
+            } else {
+                this.props.onNavigate(undefined, '/wizard/completed', {locations: [], no_valid_data: true});
+            }
         });
     }
 
