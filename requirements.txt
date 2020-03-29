@@ -10,3 +10,4 @@ sentry-sdk==0.14.3
 sentry-sdk[flask]==0.14.3
 bcrypt==3.1.7
 blinker==1.4
+sendgrid==6.2.0

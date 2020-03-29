@@ -41,20 +41,20 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Emphasize these are WHO questions
     - [ ] Determine what quiz fields should be optional and make them so
   - [ ] Confirmation page
-    - [ ] Trace tokens
-        - [ ] Generate words
-        - [ ] Store bcrypted token in db
-        - [ ] Deliver to client via REST
+    - [x] Trace tokens
+        - [x] Generate words
+        - [x] Store bcrypted token in db
+        - [x] Deliver to client via REST
         - [ ] Optionally send token via SES + add to Mailchimp
-    - [ ] Mailchimp mailing list
-        - [ ] Add to ingestion confirmation screen as optional
+    - [ ] Sendgrid mailing list
+        - [x] Add to ingestion confirmation screen as optional
         - [ ] Ensure double opt-in available
     - [ ] Show all data one more time
-    - [ ] Post upload share buttons
-      - [ ] Add share buttons
-  - [ ] View Trace Token page
-    - [ ] Enter token
-    - [ ] Delete data
+    - [x] Post upload share buttons
+      - [x] Add share buttons
+  - [x] View Trace Token page
+    - [x] Enter token
+    - [x] Delete data
 - [x] Create documentation
   - [x] Github repo
   - [x] FAQ
@@ -63,9 +63,9 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
   - [ ] Contributing guidelines (backlogged)
   - [x] Privacy best practices
 - [ ] Deploy and test on production
-- [ ] Allow user to delete their data
-  - [ ] Show token
-  - [ ] Optionally add an email address and phone number
+- [x] Allow user to delete their data
+  - [x] Show token
+  - [x] Optionally add an email address
 - [x] Create Slack workspace and link to it
     - [ ] #dataset
     - [ ] #engineers
@@ -74,6 +74,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Update links in GH org
     - [ ] Update links in website
     - [ ] Update links in markdown files
+    - [ ] Update email "From"
 - [ ] Update GitHub organization
 - [x] Add Google Analytics
 - [x] Add Sentry to frontend and backend
@@ -99,6 +100,7 @@ Expected completion: April 15th, 2020
 - [ ] Unzip Google Takeout locally without uploading
 - [ ] Notify those who are infected or recovering of newly relevant traces
 - [ ] Notify those at risk of coming into contact with an infected trace
+- [ ] Allow user to leave phone number to receive token instead of email
 
 </details>
 
