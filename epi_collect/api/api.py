@@ -1,5 +1,6 @@
 import bcrypt
 import sentry_sdk
+from sendgrid import Mail, SendGridAPIClient
 from sentry_sdk.integrations.flask import FlaskIntegration
 from sentry_sdk.integrations.sqlalchemy import SqlalchemyIntegration
 
@@ -29,6 +30,8 @@ from epi_collect.api.utils import get_aws_secret
 app = Flask(__name__)
 app.config['MAX_CONTENT_LENGTH'] = 64 * 1024 * 1024  # 64MB max per request
 
+# TODO: Clean this file up and split things out
+
 ALLOWED_GOOGLE_TAKEOUT_EXTENSIONS = ['tgz', 'zip', 'json']
 UNZIPPABLE_EXTENSIONS = ['tgz', 'zip']
 GOOGLE_TAKEOUT_PATH = 'Takeout/Location History/Location History.json'
@@ -38,6 +41,9 @@ if credentials_source == 'aws':
     RECAPTCHA_SECRET = get_aws_secret('recaptcha')['secret_key']
     # Note that we can't use a per-user salt, because we're using the hash to identify the user (on purpose).
     BCRYPT_SALT = get_aws_secret('bcrypt')['salt']
+    SENDGRID_TRANSACTIONAL_API_KEY = get_aws_secret('sendgrid')['transactional_mail_api_key']
+    sendgrid_client = SendGridAPIClient(SENDGRID_TRANSACTIONAL_API_KEY)
+    SENDGRID_MAILING_LIST_ID = '9c45a7d2-85fa-4c95-ad39-3f4895529941'
 else:
     BCRYPT_SALT = '$2b$12$vTjc1gqoKNnBFOM.w2sb..'  # Obviously different from the production one :)
 
@@ -268,6 +274,74 @@ def delete():
             return {'status': 'successful'}, 200
         except Exception as e:
             session.rollback()
+            raise e
+        finally:
+            session.close()
+    except Exception as e:
+        logging.error(e)
+        return {'error': f'Could not delete data'}, 400
+
+
+def create_email(to: str, token: str) -> Mail:
+    return Mail(
+        from_email='core@epi-collect.org',
+        to_emails=to,
+        subject='Your Epi-Collect deletion token',
+        html_content=f"""
+          <html>
+            <head>
+              <title></title>
+            </head>
+            <body>
+              <div style="font-size:12px; line-height:20px; text-align:left;">
+                <p>Hi,</p>
+                <p>Thank you so much for donating your data to Epi-Collect and thereby helping us to build an open source contact tracing dataset.</p>
+                <p>We want you to be in full control of your data. As your data is anonymous and not linked to your e-mail address, please make sure you do not loose the following token:</p>
+                <pre>{token}</pre>
+                <p>If you ever want to delete your data, please enter this token on <a href="https://www.epi-collect.org/delete">https://www.epi-collect.org/delete</a>. Without this token, we will not be able to identify which data is yours and hence we will not be able to delete your data.</p>
+                <p>If you chose to sign up for our mailing list, you will receive a separate e-mail about that.</p>
+                <p>Thank you,</p>
+                <p>Epi-Collect</p>
+              </div>
+            </body>
+          </html>""")
+
+
+@app.route('/api/insert-email', methods=['POST'])
+def insert_email():
+    try:
+        # Process data
+        data = request.form
+
+        if not check_recaptcha(data['captcha_token']):
+            return {'error': f'Could not remove data; captcha token invalid'}, 400
+        else:
+            logging.info('Captcha verified')
+
+        session = get_db_connection()
+        try:
+
+            # Check that the token the user provided is actually valid
+            hashed_token = bcrypt.hashpw(data['token'].encode('utf-8'), BCRYPT_SALT.encode('utf-8'))
+            user_id = session.query(User.id).filter_by(token_hash=hashed_token).scalar()
+            if user_id is None:
+                return {'error': f'Could not remove data; user-provided token invalid'}, 400
+
+            # Don't send emails in dev environment
+            if credentials_source != 'local':
+                # Send token email
+                sendgrid_client.send(create_email(data['email'], data['token']))
+
+                # If user wants to sign up for mailing list, add them
+                if data['add_to_mailing_list'] == 'true':
+                    sendgrid_client.client.marketing.contacts.put(
+                        request_body=dict(
+                            list_ids=[SENDGRID_MAILING_LIST_ID],
+                            contacts=[{'email': data['email']}]
+                        )
+                    )
+            return {'status': 'successful'}, 200
+        except Exception as e:
             raise e
         finally:
             session.close()

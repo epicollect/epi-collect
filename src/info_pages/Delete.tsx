@@ -44,7 +44,6 @@ const DeleteDataForm = (props: DeleteDataFormProps) => {
     const onCaptchaComplete = (submitForm: () => Promise<any>) => {
         return (captcha_token: string | null) => {
             setCaptchaToken(captcha_token);
-            console.log(captcha_token);
             if (captcha_token !== null) {
                 submitForm();
             }
