@@ -22,7 +22,7 @@
 | __V0__ ([Roadmap](./ROADMAP.md))  | __0__ ([Become a researcher](./RESEARCHERS.md)) |
 
 
-- Establish privacy-respecting [UX best practices](./PRIVACY.md) for location data donation
+- Establish privacy-respecting [best practices](./PRIVACY.md) for open source data donation
 - Establish a [FOSS dataset standard](./CONTACT_TRACING_DATASET_FORMAT.md) for contact tracing
 - Enable researchers to model the spread of COVID-19 with donated data
 
