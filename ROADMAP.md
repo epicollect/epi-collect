@@ -5,7 +5,7 @@
 
 Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
-# Pre-Launch | In Progress
+# Pre-Launch - In Progress
 <details>
     <summary>
         Expected completion: March 29th, 2020
@@ -85,7 +85,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 
 </details>
 
-# V2  | Open To Contributors
+# V2  - Open To Contributors
 <details>
 
 <summary>
