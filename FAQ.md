@@ -1,12 +1,12 @@
 # FAQ
 
 <details>
-<summary>What is contact tracing?</summary>
+  <summary><b>What is contact tracing?</b></summary>
   <a href="https://www.who.int/features/qa/contact-tracing/en/">Contact tracing</a> is a way to understand how an infection spreads throughout a population. That information can be used to predict future infections and notify those who may be affected.
 </details>
 
 <details>
-<summary>What is Epi-Collect?</summary>
+<summary><b>What is Epi-Collect?</b></summary>
 <br/>
 Epi-Collect is an online tool that converts your Google location data into a format usable by researchers who use contact tracing.
 <br/>
@@ -18,7 +18,7 @@ Epi-Collect is an MIT licensed open source project, meaning anyone can copy or c
 </details>
 
 <details>
-<summary>Is my data kept safe and private?</summary>
+<summary><b>Is my data kept safe and private?</b></summary>
 <br/>
 Yes, and we empathize with your concern. The biggest problem with recent contact tracing solutions is that they may be a gateway to surveillance capitalism in the name of public safety. There is a shrinking window of opportunity available today to set a precedent for privacy-respecting contact tracing. As an open source project with all documentation in the open, Epi-Collect is in a unique position to do that. No one has scaled open source data donation before, and we're excited to test its potential.
 <br/>
@@ -27,7 +27,7 @@ Yes, and we empathize with your concern. The biggest problem with recent contact
 </details>
 
 <details>
-<summary>Is this the same as TraceTogether?</summary>
+<summary><b>Is this the same as TraceTogether?</b></summary>
 <br/>
 TraceTogether is a different project by the government of Singapore.
 <br/>
@@ -39,7 +39,7 @@ We admire the incredibly quick work they’ve done to implement contact tracing 
 </details>
 
 <details>
-<summary>Is my data anonymized?</summary>
+<summary><b>Is my data anonymized?</b></summary>
 <br/>
 Yes.
   <br/>
@@ -53,7 +53,7 @@ Please see our <a href="./PRIVACY.md">Privacy</a> living document for more detai
 </details>
 
 <details>
-<summary>How will I know if my data gets used?</summary>
+<summary><b>How will I know if my data gets used?</b></summary>
 <br/>
 Sign up to the mailing list. Note - subscriptions to this mailing list are completely independent of submitted data. There is no way we can associate submitted data with your email address.
 <br/>
@@ -65,7 +65,7 @@ Once the data is given to the researcher, we check in with the researcher and sh
 </details>
 
 <details>
-<summary>How do I remove my data?</summary>
+<summary><b>How do I remove my data?</b></summary>
 <br/>
 You can remove your data at any time, but you *must* have your Trace Password. Your Trace Password is a secure password we generate that is provided to you after you confirm your data submission. If you chose to have it emailed to you, search for “Trace Password” in your email.
 <br/>
@@ -74,7 +74,7 @@ Once you find your Trace Password, you can enter it here.
 </details>
 
 <details>
-<summary>Can I see if I’ve crossed paths with SARS-CoV-2?</summary>
+<summary><b>Can I see if I’ve crossed paths with SARS-CoV-2?</b></summary>
 <br/>
 Not yet, but it is on our roadmap.
 </details>
@@ -82,13 +82,13 @@ Not yet, but it is on our roadmap.
 ## For researchers
 
 <details>
-<summary>How do I get access to the data?</summary>
+<summary><b>How do I get access to the data?</b></summary>
 <br/>
 Please see our document for researchers here.
 </details>
 
 <details>
-<summary>How is the data formatted?</summary>
+<summary><b>How is the data formatted?</b></summary>
 <br/>
 We are not quite sure what the best format is for the dataset yet, but you can find our schema <a href="./DATASET_FORMAT.md">here</a>.
 
@@ -96,13 +96,13 @@ We are not quite sure what the best format is for the dataset yet, but you can f
 
 ## For contributors
 <details>
-<summary>How can I contribute?</summary>
+<summary><b>How can I contribute?</b></summary>
 <br/>
 Our <a href="./ROADMAP.md">roadmap</a> lists ways that individual contributors can get involved.
 </details>
 
 <details>
-<summary>How can I reach the contributors?</summary>
+<summary><b>How can I reach the contributors?</b></summary>
 <br/>
 Join the Slack workspace, or email nessup@gmail.com.
 </details>
