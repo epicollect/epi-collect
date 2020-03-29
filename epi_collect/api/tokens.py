@@ -7,6 +7,7 @@ for each character, where we have a list of the 128 most common English words fo
 us with 19 characters)
 This gives a total number of (19*128)^6 ~= 2^67 possibilities.
 """
+import os
 import random
 import string
 from typing import List, Dict
@@ -14,10 +15,11 @@ from typing import List, Dict
 
 def load_most_common_words(min_words_per_character: int = 128) -> Dict[str, List[str]]:
     words_by_first_char = {c: [] for c in string.ascii_lowercase}
-    with open('data/google-10000-english-usa-no-swears-medium.txt') as f:
+    dirname = os.path.dirname(__file__)
+    with open(os.path.join(dirname, 'data/google-10000-english-usa-no-swears-medium.txt')) as f:
         medium_words = f.readlines()
     medium_words = [x.strip() for x in medium_words]
-    with open('data/google-10000-english-usa-no-swears-long.txt') as f:
+    with open(os.path.join(dirname, 'data/google-10000-english-usa-no-swears-long.txt')) as f:
         long_words = f.readlines()
     long_words = [x.strip() for x in long_words]
     words = medium_words + long_words
