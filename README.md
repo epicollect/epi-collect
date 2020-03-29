@@ -11,6 +11,7 @@
 		<a href="https://epi-collect.org" target="_blank" rel="noopener">Website</a>
 		• <a href="https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg" target="_blank" rel="noopener">Slack</a>
 		• <a href="./ROADMAP.md">Roadmap</a>
+		• <a href="./FAQ.md">FAQ</a>
 	</p>
 </div>
 
