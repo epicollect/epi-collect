@@ -23,8 +23,8 @@
 
 
 - Establish privacy-respecting [best practices](./PRIVACY.md) for open source data donation
-- Establish a [FOSS dataset standard](./CONTACT_TRACING_DATASET_FORMAT.md) for contact tracing
-- Enable researchers to model the spread of COVID-19 with donated data
+- Create a FOSS dataset standard for contact tracing
+- Enable researchers to model the spread of COVID-19 and other diseases using donated data
 
 ## [Frequently Asked Questions](./FAQ.md)
 
