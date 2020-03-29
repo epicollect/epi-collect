@@ -17,7 +17,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 - [x] Parse location data uploads from Google Takeout
 - [x] Allow users to remove location data points using polygons
     - [ ] Fix event listeners on saved polygons give a React warning
-- [ ] Require recaptcha for submission
+- [x] Require recaptcha for submission
 - [x] Buy domain name and set up
 - [x] When trying to submit on mobile show message
 - [x] AWS firewall / request filtering
@@ -59,7 +59,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Workspace greeting
 - [ ] Update GitHub organization
 - [ ] Add Google Analytics
-- [ ] Add Sentry to frontend and backend
+- [x] Add Sentry to frontend and backend
 - [ ] Find and partner with first scientific user of the dataset
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
