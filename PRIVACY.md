@@ -7,11 +7,11 @@ important goal:
 
 <h1>Give users complete visibility and control over data at all stages.</h1>
 
-## What is data visibility?
-Data visibility is the ability of the user to see the structure (link to dataset schema) and content (Trace Passwords) of their data.
+## What is visibility?
+Data visibility is the ability of the user to see the [structure](./CONTACT_TRACING_DATASET_FORMAT.md) and content of their data.
 
-## What is data control?
-Data control is the ability to decide the lifecycle of their data. Should data exist, or should it not? When a researcher is approved, should the data be used, or should it be withheld?
+## What is control?
+Data control is the ability to decide the lifecycle of their data. Should data exist, or should it not? When a researcher is approved, should data be used, or should it be withheld?
 
 ## What stages are there?
 
