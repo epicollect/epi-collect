@@ -28,7 +28,7 @@
 ## [Frequently Asked Questions](./FAQ.md)
 
 <details>
-<summary>Is my data kept safe and private?</summary>
+	<summary><b>Is my data kept safe and private?</b></summary>
 <br/>
 Yes, and we empathize with your concern. The biggest problem with recent contact tracing solutions is that they may be a gateway to surveillance capitalism in the name of public safety. There is a shrinking window of opportunity available today to set a precedent for privacy-respecting contact tracing. As an open source project with all documentation in the open, Epi-Collect is in a unique position to do that. No one has scaled open source data donation before, and we're excited to test its potential.
 <br/>
@@ -37,7 +37,7 @@ Yes, and we empathize with your concern. The biggest problem with recent contact
 </details>
 
 <details>
-<summary>Is my data anonymized?</summary>
+	<summary><b>Is my data anonymized?</b></summary>
 <br/>
 Yes.
   <br/>
@@ -51,7 +51,7 @@ Please see our <a href="./PRIVACY.md">Privacy</a> living document for more detai
 </details>
 
 <details>
-<summary>How do I get access to the data?</summary>
+	<summary><b>How do I get access to the data?</b></summary>
 <br/>
 Please see our <a href="./RESEARCHERS.md">guidance</a> for researchers.
 </details>
