@@ -19,13 +19,15 @@ class Confirm extends React.Component<WizardStepProps, {}> {
 
     onCaptchaComplete = (captcha_token: string | null) => {
         if (captcha_token !== null) {
+            (this._recaptcha_ref.current as ReCAPTCHA).reset();
             axios.post('/api/save', {
                 locations: this.props.data.locations,
                 user_data: this.props.data.user_data,
                 captcha_token: captcha_token
             })
                 .then((res) => {
-                    this.props.onNavigate(undefined, '/wizard/completed', {locations: []});
+                    this.props.onNavigate(undefined, '/wizard/completed',
+                        {locations: [], token: res.data['token']});
                 })
                 .catch(function (error) {
                     console.log(error);

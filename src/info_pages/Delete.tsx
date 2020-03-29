@@ -3,7 +3,6 @@ import * as Yup from "yup";
 import {ErrorMessage, Formik} from "formik";
 import {Button, Form, Row} from "react-bootstrap";
 import axios from "axios";
-import {FormikErrors} from "formik/dist/types";
 import ReCAPTCHA from "react-google-recaptcha";
 
 
@@ -73,7 +72,8 @@ const DeleteDataForm = (props: DeleteDataFormProps) => {
                     }).catch((error) => {
                         setSubmitting(false);
                         console.log(error.response);
-                        setErrors({'field_errors': {'token': 'Invalid token'}} as FormikErrors<DeleteDataFormValues>)
+                        (_recaptcha_ref.current as ReCAPTCHA).reset();
+                        setErrors({'token': 'Invalid token'})
                     });
 
                 }}

@@ -70,13 +70,13 @@ Once the data is given to the researcher, we check in with the researcher, and s
 You can remove your data at any time, but you *must* have your Trace Password. Your Trace Password is a secure password we generate that is provided to you after you confirm your data submission. If you chose to have it emailed to you, search for “Trace Password” in your email.
 <br/>
 <br/>
-Once you find your Trace Password, you can enter it here.
+Once you find your Trace Password, you can enter it here (coming soon).
 </details>
 
 <details>
 <summary><b>Can I see if I’ve crossed paths with SARS-CoV-2?</b></summary>
 <br/>
-Not yet, but it is on our roadmap.
+Not yet, but it is on our [roadmap](./ROADMAP.md).
 </details>
 
 ## For researchers
@@ -84,13 +84,13 @@ Not yet, but it is on our roadmap.
 <details>
 <summary><b>How do I get access to the data?</b></summary>
 <br/>
-Please see our document for researchers here.
+Please see our [guidance](./RESEARCHERS.md) for researchers.
 </details>
 
 <details>
 <summary><b>How is the data formatted?</b></summary>
 <br/>
-We are not quite sure what the best format is for the dataset yet, but you can find our schema <a href="./DATASET_FORMAT.md">here</a>.
+We are not quite sure what the best format is for the dataset yet. If you can help us figure this out, please reach out!
 
 </details>
 
