@@ -5,7 +5,10 @@ import ReCAPTCHA from "react-google-recaptcha";
 import * as Yup from "yup";
 import {ErrorMessage, Formik} from "formik";
 import axios from "axios";
-import {Button, ButtonGroup, ButtonToolbar, Form} from "react-bootstrap";
+import {Button, ButtonGroup, ButtonToolbar, Col, Form, Row} from "react-bootstrap";
+// @ts-ignore
+import {Facebook, HackerNews, Linkedin, Mail, Reddit, Twitter} from 'react-social-sharing';
+import {LinkContainer} from "react-router-bootstrap";
 
 type EmailSignupFormValues = {
     email: string,
@@ -17,7 +20,6 @@ type EmailSignupFormProps = {
     token: string,
     onDone: () => void
 }
-
 
 const EmailSignupForm = (props: EmailSignupFormProps) => {
 
@@ -139,6 +141,31 @@ const EmailSignupForm = (props: EmailSignupFormProps) => {
     );
 };
 
+type SocialSharingProps = {
+    link: string,
+    text: string,
+    email_subject: string
+}
+
+const SocialSharing = (props: SocialSharingProps) => {
+    return (
+        <>
+            <p>Help us spread the word about Epi-Collect!</p>
+            <Row>
+                <Col><Twitter solid medium message={props.text} link={props.link}/></Col>
+                <Col><Facebook solid medium link={props.link}/></Col>
+                <Col><Mail solid medium subject={props.email_subject} body={props.text + ' ' + props.link}/></Col>
+                <Col><Linkedin solid medium message={props.text} link={props.link}/></Col>
+                <Col><Reddit solid medium link={props.link}/></Col>
+                <Col><HackerNews solid medium message={props.text} link={props.link}/></Col>
+            </Row>
+            <LinkContainer to="/">
+                <Button variant="secondary">Back to home</Button>
+            </LinkContainer>
+        </>
+    )
+};
+
 type CompletedState = {
     show_social: boolean
 }
@@ -158,7 +185,9 @@ class Completed extends React.Component<WizardStepProps, CompletedState> {
 
             let main_content;
             if (this.state.show_social === true) {
-                main_content = <div>Social buttons</div>;
+                main_content = <SocialSharing link="https://epi-collect.org"
+                                              text="I've just donated my data to Epi-Collect to help research into COVID-19, donate yours too!"
+                                              email_subject="Donating your data to help research into COVID-19"/>
             } else {
                 main_content =
                     <EmailSignupForm token={this.props.data.token as string}
