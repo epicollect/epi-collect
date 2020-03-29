@@ -19,7 +19,7 @@
 
 | Current Milestone                 | Current Researchers|
 | ---                               | --- |
-| __V0__ ([Roadmap](./ROADMAP.md))  | __0__ ([Become a researcher](./RESEARCHERS.md)) |
+| __V0__ ([Pre-launch](./ROADMAP.md))  | [Become our first researcher](./RESEARCHERS.md) |
 
 
 - Establish privacy-respecting [best practices](./PRIVACY.md) for open source data donation
