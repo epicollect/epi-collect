@@ -76,7 +76,7 @@ Once you find your Trace Password, you can enter it here (coming soon).
 <details>
 <summary><b>Can I see if I’ve crossed paths with SARS-CoV-2?</b></summary>
 <br/>
-Not yet, but it is on our [roadmap](./ROADMAP.md).
+  Not yet, but it is on our <a href="./ROADMAP.md">roadmap</a>.
 </details>
 
 ## For researchers
@@ -84,7 +84,7 @@ Not yet, but it is on our [roadmap](./ROADMAP.md).
 <details>
 <summary><b>How do I get access to the data?</b></summary>
 <br/>
-Please see our [guidance](./RESEARCHERS.md) for researchers.
+  Please see our <a href="./RESEARCHERS.md">document</a> for researchers.
 </details>
 
 <details>
