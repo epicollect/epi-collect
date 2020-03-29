@@ -26,6 +26,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
   - [ ] Logo
   - [ ] Social share graphic
   - [ ] Home page
+    - [ ] Copy
     - [ ] Link to FAQ
     - [ ] GIF of user going through steps
     - [ ] Include count of traces in the database (don't hit DB to save $$$, update manually every day)
@@ -54,10 +55,8 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
   - [ ] View Trace Token page
     - [ ] Enter token
     - [ ] Delete data
-- [ ] Create documentation
+- [x] Create documentation
   - [x] Github repo
-  - [ ] Website copy
-      - [ ] Home page
   - [x] FAQ
   - [ ] Contact tracing data design (backlogged)
   - [ ] Outreach efforts (backlogged)
