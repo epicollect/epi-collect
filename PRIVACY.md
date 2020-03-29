@@ -1,5 +1,5 @@
 To our knowledge, no one has scaled open source data donation, especially when it comes to location or symptom data.
-There are several ongoing efforts to collect contact tracing data, but they are rife with privacy issues
+There are several ongoing efforts to collect contact tracing data, but some are rife with privacy issues
 that will surface in months to years from now.
 
 The best way to resolve these issues proactively is to solve them in the open. It starts with a simple, but
