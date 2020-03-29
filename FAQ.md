@@ -32,7 +32,7 @@ Yes, and we empathize with your concern. The biggest problem with recent contact
 TraceTogether is a different project by the government of Singapore.
 <br/>
 <br/>
-As of this writing, they have announced plans to open source their code, but have not done so yet.
+One key difference is that the data created by Epi-Collect is scrubbed by the user for personally identifiable information. Another is that we use data from Google Takeout, which means we are able to provide tracing information for previous encounters, not just future ones.
 <br/>
 <br/>
 We admire the incredibly quick work they’ve done to implement contact tracing in their country. However, we would like to make our data ingestion and usage processes completely transparent and community governed.
