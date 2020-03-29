@@ -6,10 +6,8 @@ import './styles.scss';
 // className="justify-content-center"
 
 const Home = () => {
-
     return (
         <Container>
-            
             <h1>
                 This website allows you to anonymously donate your
                 Google location data to COVID-19 research projects.

@@ -40,12 +40,12 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
   - [ ] Add symptoms
     - [ ] Emphasize these are WHO questions
     - [ ] Determine what quiz fields should be optional and make them so
-  - [ ] Confirmation page
+  - [x] Confirmation page
     - [x] Trace tokens
         - [x] Generate words
         - [x] Store bcrypted token in db
         - [x] Deliver to client via REST
-        - [ ] Optionally send token via SES + add to Mailchimp
+        - [x] Optionally send token via SES + add to Mailchimp
     - [ ] Sendgrid mailing list
         - [x] Add to ingestion confirmation screen as optional
         - [ ] Ensure double opt-in available
