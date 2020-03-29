@@ -2,7 +2,6 @@
 | ---                               | --- |
 | [__V0__](./ROADMAP.md#V0)         | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
 | [__V1__](./ROADMAP.md#V1)         | Open to contributors |
-| [__V2__](./ROADMAP.md#V2)         | Open to contributors |
 
 Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
@@ -72,6 +71,10 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] #dataset
     - [ ] #engineers
     - [ ] Workspace greeting
+- [ ] Create shared inbox (core@epi-collect.org)
+    - [ ] Update links in GH org
+    - [ ] Update links in website
+    - [ ] Update links in markdown files
 - [ ] Update GitHub organization
 - [x] Add Google Analytics
 - [x] Add Sentry to frontend and backend
@@ -95,17 +98,6 @@ Expected completion: April 15th, 2020
 - [ ] Make data point editing UI mobile friendly
 - [ ] Add pipeline to ingest Facebook location data
 - [ ] Unzip Google Takeout locally without uploading
-
-</details>
-
-
-# V2
-
-<details>
-    <summary>Expected completion: May 1st, 2020</summary>
-
-<br />
-
 - [ ] Notify those who are infected or recovering of newly relevant traces
 - [ ] Notify those at risk of coming into contact with an infected trace
 
