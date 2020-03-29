@@ -284,7 +284,7 @@ def delete():
 
 def create_email(to: str, token: str) -> Mail:
     return Mail(
-        from_email='core@epi-collect.org',
+        from_email='noreply@epi-collect.org',
         to_emails=to,
         subject='Your Epi-Collect deletion token',
         html_content=f"""
