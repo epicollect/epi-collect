@@ -55,14 +55,14 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Enter token
     - [ ] Delete data
 - [ ] Create documentation
-  - [ ] Github repo
-  - [ ] Home page
-  - [ ] Wizard steps
-  - [ ] FAQ
-  - [ ] Contact tracing data design
-  - [ ] Outreach efforts
-  - [ ] Contributing guidelines
-  - [ ] Privacy best practices
+  - [x] Github repo
+  - [ ] Website copy
+      - [ ] Home page
+  - [x] FAQ
+  - [ ] Contact tracing data design (backlogged)
+  - [ ] Outreach efforts (backlogged)
+  - [ ] Contributing guidelines (backlogged)
+  - [x] Privacy best practices
 - [ ] Deploy and test on production
 - [ ] Allow user to delete their data
   - [ ] Show token
