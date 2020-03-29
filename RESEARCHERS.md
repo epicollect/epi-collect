@@ -1,6 +1,6 @@
 # Information for researchers
 
-If you or your research group would like to work with Epi-Collect data, we would love to talk with you.
+If you or your research group would like to work with Epi-Collect data, or you are in a health-related field and want to influence the direction of Epi-Collect, we would love to talk with you.
 Please email us at nessup@gmail.com and mennen.lars@gmail.com. We also encourage you to join the public
 [Slack workspace](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg).
 
