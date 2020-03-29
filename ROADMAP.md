@@ -27,6 +27,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
   - [ ] Logo
   - [ ] Social share graphic
   - [ ] Home page
+    - [ ] Link to FAQ
     - [ ] GIF of user going through steps
     - [ ] Include count of traces in the database (don't hit DB to save $$$, update manually every day)
   - [ ] Upload data step
