@@ -58,10 +58,10 @@ Please see our <a href="./PRIVACY.md">Privacy</a> living document for more detai
 Sign up to the mailing list. Note - subscriptions to this mailing list are completely independent of submitted data. There is no way we can associate submitted data with your email address.
 <br/>
 <br/>
-Before your data is handed off to a researcher, we send an email to the mailing list introducing the researcher and what their goals with the data are. By this point, all location data is anonymized. Still, we provide a 24 hour window for tracers to log in and remove their data before it is handed off to the researcher.
+Before your data is handed off to a researcher, we send an email to the mailing list introducing the researcher and what their goals with the data are. By this point, all location data is anonymized. Still, we provide a 24 hour window for users to log in and remove their data before it is handed off to the researcher.
 <br/>
 <br/>
-Once the data is given to the researcher, we check in with the researcher and share their updates with the community.
+Once the data is given to the researcher, we check in with the researcher, and share their progress with the community.
 </details>
 
 <details>
