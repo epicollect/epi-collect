@@ -1,4 +1,4 @@
-TODO: Shorten this
+__This is a WIP__
 
 To our knowledge, no one has scaled open source data donation, especially when it comes to location or symptom data.
 There are several ongoing efforts to collect contact tracing data, but they are rife with privacy issues
@@ -8,7 +8,7 @@ The best way to resolve these issues proactively is to solve them in the open. I
 important goal:
 
 <div style="text-align: center;">
-  <h3>Give users complete visibility and control over data at all stages.</h3>
+  <h3 style="text-align: center;">Give users complete visibility and control over data at all stages.</h3>
 </div>
 
 #### What is data visibility?
@@ -21,6 +21,8 @@ Data control is the ability to decide the lifecycle of their data. Should data e
 
 ##### User stages
 
+![User stages](./docs/assets/user-stages.png)
+
 | Stage | Description |
 | --- | --- |
 | Pre-Ingestion | The user visits the home page, GitHub repo, etc |
@@ -31,6 +33,8 @@ Data control is the ability to decide the lifecycle of their data. Should data e
 | Ingestion > Review | The user reviews all data prior to submission |
 
 ##### Researcher stages
+
+![Researcher stages](./docs/assets/researcher-stages.png)
 
 | Stage | Description |
 | --- | --- |
