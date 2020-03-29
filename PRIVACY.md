@@ -5,9 +5,7 @@ that will surface in months to years from now.
 The best way to resolve these issues proactively is to solve them in the open. It starts with a simple, but
 important goal:
 
-<div style="text-align: center;">
-  <h1 style="text-align: center;">Give users complete visibility and control over data at all stages.</h1>
-</div>
+<h1>Give users complete visibility and control over data at all stages.</h1>
 
 ## What is data visibility?
 Data visibility is the ability of the user to see the structure (link to dataset schema) and content (Trace Passwords) of their data.
