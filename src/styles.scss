@@ -1,8 +1,19 @@
 // Override default variables before the import
+$font-size-base: 1.1875rem;
+$blue: #002949;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 800px,
+  xl: 800px
+);
 
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap/scss/variables.scss';
+
+
 
 // Additional styles
 $breadcrumb-completed-color: $secondary;
