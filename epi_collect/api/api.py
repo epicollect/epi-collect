@@ -160,22 +160,27 @@ def fill_missing_user_data_values(data: dict) -> dict:
     return data
 
 
+def check_recaptcha(captcha_token: str) -> bool:
+    # Locally, skip captcha verification
+    if credentials_source == 'local':
+        return True
+    # Verify captcha
+    captcha_res = requests.post('https://www.google.com/recaptcha/api/siteverify',
+                                {'secret': RECAPTCHA_SECRET, 'response': captcha_token})
+    captcha_res_json = captcha_res.json()
+    return not ('success' not in captcha_res_json or captcha_res_json['success'] == False)
+
+
 @app.route('/api/save', methods=['POST'])
 def save():
     try:
         # Process data
         data = request.json
 
-        # Locally, skip captcha verification
-        if credentials_source != 'local':
-            # Verify captcha first
-            captcha_res = requests.post('https://www.google.com/recaptcha/api/siteverify',
-                                        {'secret': RECAPTCHA_SECRET, 'response': data['captcha_token']})
-            captcha_res_json = captcha_res.json()
-            if captcha_res_json['success'] == False:
-                return {'error': f'Could not save data; captcha token invalid'}, 400
-            else:
-                logging.info('Captcha verified')
+        if not check_recaptcha(data['captcha_token']):
+            return {'error': f'Could not save data; captcha token invalid'}, 400
+        else:
+            logging.info('Captcha verified')
 
         # Extract user-provided data
         locations = [LocationDatum(**l) for l in data['locations']]
@@ -203,12 +208,12 @@ def save():
 
             # Add locations
             orm_locations = [Location.from_location_datum(l, user.id) for l in locations]
-            session.add_all(orm_locations)
+            user.locations.extend(orm_locations)
             session.flush()  # Populates the IDs
 
             # Add user data
             for k, v in user_data_dict.items():
-                session.add(UserData(
+                user.data.append(UserData(
                     user_id=user.id,
                     datum_type=k,
                     datum_value=v,
@@ -219,7 +224,7 @@ def save():
             for location, orm_location in zip(locations, orm_locations):
                 # Add activities
                 for activity in location.activities:
-                    session.add(
+                    orm_location.activities.append(
                         Activity.from_activity_datum(activity, orm_location.id))
 
             session.commit()
@@ -232,6 +237,39 @@ def save():
     except Exception as e:
         logging.error(e)
         return {'error': f'Could not save data'}, 400
+
+
+@app.route('/api/delete', methods=['POST'])
+def delete():
+    try:
+        # Process data
+        data = request.form
+
+        if not check_recaptcha(data['captcha_token']):
+            return {'error': f'Could not remove data; captcha token invalid'}, 400
+        else:
+            logging.info('Captcha verified')
+
+        session = get_db_connection()
+        try:
+
+            # Get user ID corresponding to token
+            hashed_token = bcrypt.hashpw(data['token'].encode('utf-8'), BCRYPT_SALT.encode('utf-8'))
+            user_id = session.query(User.id).filter_by(token_hash=hashed_token).scalar()
+            if user_id is None:
+                return {'error': f'Could not remove data; user-provided token invalid'}, 400
+
+            User.query.filter_by(id=user_id).delete()
+            session.commit()
+            return {'status': 'successful'}, 200
+        except Exception as e:
+            session.rollback()
+            raise e
+        finally:
+            session.close()
+    except Exception as e:
+        logging.error(e)
+        return {'error': f'Could not delete data'}, 400
 
 
 @app.route('/api/health')

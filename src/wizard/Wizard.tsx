@@ -36,7 +36,7 @@ class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any>
 
     render() {
 
-        let {path, url} = this.props.match;
+        let {path} = this.props.match;
         let location = this.props.location;
 
         let seen_active = false;

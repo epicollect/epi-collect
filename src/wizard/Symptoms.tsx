@@ -347,10 +347,6 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
 class Symptoms extends React.Component<WizardStepProps, {}> {
 
-    constructor(props: WizardStepProps) {
-        super(props);
-    }
-
     handleComplete(values: FormValues) {
         this.props.data.user_data = values;
         this.props.onNavigate(undefined, '/wizard/confirm', this.props.data);

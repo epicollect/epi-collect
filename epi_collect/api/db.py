@@ -4,35 +4,13 @@ import os
 from geoalchemy2 import Geography
 from sqlalchemy import create_engine, Column, DateTime, ForeignKey, Integer, String, Binary
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, relationship
 
 from epi_collect.api.data_classes import LocationDatum, ActivityDatum
 from epi_collect.api.utils import get_aws_secret
 
 Base = declarative_base()
 Session = sessionmaker()
-
-
-class Location(Base):
-    __tablename__ = 'locations'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
-    timestamp = Column(DateTime, nullable=False, index=True)
-    point = Column(Geography(geometry_type='POINT', srid=4326), nullable=False)
-    accuracy = Column(Integer)
-
-    @classmethod
-    def from_location_datum(cls, loc: LocationDatum, user_id: int):
-        return cls(user_id=user_id, timestamp=loc.timestamp, point=f'POINT({loc.longitude} {loc.latitude})',
-                   accuracy=loc.accuracy)
-
-
-class User(Base):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    token_hash = Column(Binary, nullable=False, index=True)
-    first_submission_timestamp = Column(DateTime, nullable=False)
-    last_updated_timestamp = Column(DateTime, nullable=False)
 
 
 class UserData(Base):
@@ -58,6 +36,31 @@ class Activity(Base):
                    timestamp=activity.timestamp,
                    type=activity.activity,
                    confidence=activity.confidence)
+
+
+class Location(Base):
+    __tablename__ = 'locations'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False, index=True)
+    timestamp = Column(DateTime, nullable=False, index=True)
+    point = Column(Geography(geometry_type='POINT', srid=4326), nullable=False)
+    accuracy = Column(Integer)
+    activities = relationship(Activity, backref='locations', cascade="all,delete")
+
+    @classmethod
+    def from_location_datum(cls, loc: LocationDatum, user_id: int):
+        return cls(user_id=user_id, timestamp=loc.timestamp, point=f'POINT({loc.longitude} {loc.latitude})',
+                   accuracy=loc.accuracy)
+
+
+class User(Base):
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    token_hash = Column(Binary, nullable=False, index=True)
+    first_submission_timestamp = Column(DateTime, nullable=False)
+    last_updated_timestamp = Column(DateTime, nullable=False)
+    data = relationship(UserData, backref='users', cascade="all,delete")
+    locations = relationship(Location, backref='users', cascade="all,delete")
 
 
 def get_db_credentials_aws():

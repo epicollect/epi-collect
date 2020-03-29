@@ -4,10 +4,11 @@ import Home from './Home';
 import {Button, Container, Jumbotron, Nav, Navbar, Row} from "react-bootstrap";
 import FAQ from './FAQ';
 import {LinkContainer} from 'react-router-bootstrap';
+import Delete from "./Delete";
 
 const InfoPage = () => {
 
-    let {path, url} = useRouteMatch();
+    let {path} = useRouteMatch();
 
     if (path === '/') {
         path = '';
@@ -24,6 +25,9 @@ const InfoPage = () => {
                     </LinkContainer>
                     <LinkContainer to="/faq">
                         <Nav.Link>FAQ</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/delete">
+                        <Nav.Link>Delete my data</Nav.Link>
                     </LinkContainer>
                 </Nav>
             </Navbar>
@@ -53,13 +57,12 @@ const InfoPage = () => {
                     </Switch>
                 </Container>
             </Jumbotron>
-            <Container fluid>
-                <Row className="justify-content-md-center">
-                    <Switch>
-                        <Route exact path={`${path}/`} component={Home}/>
-                        <Route path={`${path}/faq`} component={FAQ}/>
-                    </Switch>
-                </Row>
+            <Container>
+                <Switch>
+                    <Route exact path={`${path}/`} component={Home}/>
+                    <Route path={`${path}/faq`} component={FAQ}/>
+                    <Route path={`${path}/delete`} component={Delete}/>
+                </Switch>
             </Container>
         </>
 

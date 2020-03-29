@@ -1,13 +1,12 @@
 import React from 'react';
-import {useRouteMatch} from "react-router-dom";
+import {Row} from "react-bootstrap";
 
 const Home = () => {
 
-    let {path, url} = useRouteMatch();
-
     return (
-
-        <h1>Home</h1>
+        <Row className="justify-content-md-center">
+            <h1>Home</h1>
+        </Row>
 
     );
 };

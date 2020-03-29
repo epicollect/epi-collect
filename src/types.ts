@@ -42,6 +42,7 @@ export type WizardState = {
     locations: Location[],
     user_data?: FormValues,
     geomap?: GeoMapState,
+    token?: string
 }
 
 export type WizardStepProps = {

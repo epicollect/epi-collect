@@ -7,10 +7,6 @@ type DataSelectorState = {};
 
 class SelectData extends React.Component<WizardStepProps, DataSelectorState> {
 
-    constructor(props: WizardStepProps) {
-        super(props);
-    }
-
     onDone = (locations: Location[], geomap_state: GeoMapState) => {
         const state = this.props.data;
         state.locations = locations;
