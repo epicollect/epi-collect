@@ -20,7 +20,7 @@ Epi-Collect is an MIT licensed open source project, meaning anyone can copy or c
 <details>
 <summary>Is my data kept safe and private?</summary>
 <br/>
-Yes, and we empathize with your concern. The biggest problem with recent contact tracing solutions is that they may be a gateway to surveillance capitalism in the name of public safety. There is a shrinking window of opportunity available today to set a precedent for privacy-respecting contact tracing. As an open source project with all documentation in the open, Epi-Collect is in a unique position to do that.
+Yes, and we empathize with your concern. The biggest problem with recent contact tracing solutions is that they may be a gateway to surveillance capitalism in the name of public safety. There is a shrinking window of opportunity available today to set a precedent for privacy-respecting contact tracing. As an open source project with all documentation in the open, Epi-Collect is in a unique position to do that. No one has scaled open source data donation before, and we're excited to test its potential.
 <br/>
 <br/>
   Check out our <a href="./PRIVACY.md">Privacy</a> living document to see how we think about this and how we hope others will too.
@@ -45,7 +45,7 @@ Yes.
   <br/>
   <br/>
   <ul>
-    <li>We’ve designed our database such that there is no possible way to associate location data with your identity. If you’re an engineer, you can see our very simple database schema here.</li>
+    <li>We’ve designed our database such that there is no possible way to associate location data with your identity. If you’re an engineer, you can see our very simple database schema <a href="./epi_collect/api/db.py">here</a>.</li>
     <li>During data ingestion, we ask users to review every data point and delete those that they believe are personally identifiable. We also give hints about what data points may be personally identifiable.</li>
     <li>We do not make the dataset available to a researcher unless they pass certain verification requirements.</li>
   </ul>
