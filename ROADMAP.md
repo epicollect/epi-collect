@@ -22,7 +22,10 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 - [x] When trying to submit on mobile show message
 - [x] AWS firewall / request filtering
 - [x] Enable HTTPS
-- [ ] Polish UI
+- [ ] Per page changes
+  - [ ] Favicon
+  - [ ] Logo
+  - [ ] Social share graphic
   - [ ] Home page
     - [ ] GIF of user going through steps
     - [ ] Include count of traces in the database
@@ -37,9 +40,20 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Emphasize these are WHO questions
     - [ ] Determine what quiz fields should be optional and make them so
   - [ ] Confirmation page
+    - [ ] Trace tokens
+        - [ ] Generate words
+        - [ ] Store bcrypted token in db
+        - [ ] Deliver to client via REST
+        - [ ] Optionally send token via SES + add to Mailchimp
+    - [ ] Mailchimp mailing list
+        - [ ] Add to ingestion confirmation screen as optional
+        - [ ] Ensure double opt-in available
     - [ ] Show all data one more time
     - [ ] Post upload share buttons
       - [ ] Add share buttons
+  - [ ] View Trace Token page
+    - [ ] Enter token
+    - [ ] Delete data
 - [ ] Create documentation
   - [ ] Github repo
   - [ ] Home page
@@ -60,9 +74,6 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 - [ ] Update GitHub organization
 - [x] Add Google Analytics
 - [x] Add Sentry to frontend and backend
-- [ ] Mailchimp mailing list
-    - [ ] Add to ingestion confirmation screen as optional
-    - [ ] Ensure double opt-in available
 - [ ] Find and partner with first scientific user of the dataset
 - [ ] Reach out to helpwithcovid.com
 - [ ] Remove test data from RDS database
@@ -78,7 +89,8 @@ Expected completion: April 15th, 2020
 </summary>
     
 <br />
-    
+
+- [ ] In View Trace Toke page, show data points and quiz answers
 - [ ] Make data point editing UI mobile friendly
 - [ ] Add pipeline to ingest Facebook location data
 - [ ] Unzip Google Takeout locally without uploading
