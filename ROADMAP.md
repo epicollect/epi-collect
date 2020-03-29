@@ -1,11 +1,11 @@
 | Milestone                         | Active Contributors |
 | ---                               | --- |
-| __Pre-launch__                    | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
+| __Pre-Launch__                    | Lars Mennen (@larsmennen), Danny Friday (@nessup) |
 | __V2__                            | Open to contributors |
 
 Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg)!
 
-# Pre-launch [in progress]
+# Pre-Launch | In Progress
 <details>
     <summary>
         Expected completion: March 29th, 2020
@@ -85,7 +85,7 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
 
 </details>
 
-# V2 [open to contributors]
+# V2  | Open To Contributors
 <details>
 
 <summary>
