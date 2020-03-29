@@ -1,3 +1,6 @@
+import sentry_sdk
+sentry_sdk.init("https://5f0ebb4296f04182a271364dc69c5b9c@sentry.io/5178703")
+
 import datetime
 import json
 import logging
