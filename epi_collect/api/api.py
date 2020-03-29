@@ -1,4 +1,8 @@
+import bcrypt
 import sentry_sdk
+
+from epi_collect.api.tokens import generate_human_readable_token
+
 sentry_sdk.init("https://5f0ebb4296f04182a271364dc69c5b9c@sentry.io/5178703")
 
 import datetime
@@ -29,6 +33,10 @@ GOOGLE_TAKEOUT_PATH = 'Takeout/Location History/Location History.json'
 credentials_source = os.environ.get('CREDENTIALS_SOURCE', 'local')
 if credentials_source == 'aws':
     RECAPTCHA_SECRET = get_aws_secret('recaptcha')['secret_key']
+    # Note that we can't use a per-user salt, because we're using the hash to identify the user (on purpose).
+    BCRYPT_SALT = get_aws_secret('bcrypt')['salt']
+else:
+    BCRYPT_SALT = '$2b$12$vTjc1gqoKNnBFOM.w2sb..'  # Obviously different from the production one :)
 
 # Do not include any data before this point, 2 weeks before first probable case according to WHO
 EARLIEST_DATETIME = int(
@@ -174,13 +182,21 @@ def save():
         user_data_dict = fill_missing_user_data_values(data['user_data'])
         user_data_dict = flatten_dict(user_data_dict)
         user_data_dict = {k: v for k, v in user_data_dict.items() if v}
-
         # Save data
         session = get_db_connection()
         try:
+            # Keep generating a token until we do not have a collision (this probability is tiny, but just in case)
+            non_colliding_token = False
+            while not non_colliding_token:
+                # Generate user token
+                human_readable_token = generate_human_readable_token()
+                hashed_token = bcrypt.hashpw(human_readable_token.encode('utf-8'), BCRYPT_SALT.encode('utf-8'))
+                non_colliding_token = session.query(User.id).filter_by(token_hash=hashed_token).scalar() is None
+
             # Add user
             now = datetime.datetime.now(tz=datetime.timezone.utc)
-            user = User(first_submission_timestamp=now,
+            user = User(token_hash=hashed_token,
+                        first_submission_timestamp=now,
                         last_updated_timestamp=now)
             session.add(user)
             session.flush()  # Populate ID
@@ -207,7 +223,7 @@ def save():
                         Activity.from_activity_datum(activity, orm_location.id))
 
             session.commit()
-            return {'status': 'successful', 'id': user.id}, 200
+            return {'status': 'successful', 'token': human_readable_token}, 200
         except Exception as e:
             session.rollback()
             raise e

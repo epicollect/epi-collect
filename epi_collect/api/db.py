@@ -2,7 +2,7 @@ import argparse
 import os
 
 from geoalchemy2 import Geography
-from sqlalchemy import create_engine, Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import create_engine, Column, DateTime, ForeignKey, Integer, String, Binary
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
@@ -30,6 +30,7 @@ class Location(Base):
 class User(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, autoincrement=True)
+    token_hash = Column(Binary, nullable=False, index=True)
     first_submission_timestamp = Column(DateTime, nullable=False)
     last_updated_timestamp = Column(DateTime, nullable=False)
 
