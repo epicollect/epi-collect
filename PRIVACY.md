@@ -43,3 +43,23 @@ Data control is the ability to decide the lifecycle of their data. Should data e
 | Accepted | The researcher satisfies the requirements. A message is sent to the community introducing the researcher, describing the research, and providing a 24 hour window to remove data |
 | Researching | The researcher gains access to the data |
 | Post-Research | The researcher is done using the data |
+
+# Principles
+
+## Principle 1: Securely transmit as little information over the Internet as possible
+
+### Summary
+Only send what is necessary for tracing, and do so securely.
+### Rationale
+- Location and medical data must be safe in transit and at rest.
+### Execution
+
+| Stages | Description | State |
+| --- | --- | --- |
+| Pre-ingestion, during ingestion, post ingestion | All external communication done over HTTPS | Done |
+| Pre-ingestion, during ingestion, post ingestion | All exposed endpoints have DoS protection and SPI | Done |
+| Pre-ingestion, during ingestion, post ingestion | All data is encrypted at rest | Done |
+| During ingestion | Epi-Collect parses the Google Takeout zip file locally in the browser | Not Done |
+| During ingestion | Filtering step of the wizard allows users to remove sensitive data points | Done |
+
+To be continued
