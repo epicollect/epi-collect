@@ -56,7 +56,7 @@ Please see our <a href="./PRIVACY.md">Privacy</a> living document for more detai
 Please see our <a href="./RESEARCHERS.md">guidance</a> for researchers.
 </details>
 
-[See the full FAQ](./FAQ.md)
+[Full FAQ](./FAQ.md)
 
 
 ## Setup
