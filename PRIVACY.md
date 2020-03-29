@@ -11,7 +11,7 @@ important goal:
 Data visibility is the ability of the user to see the [structure](./CONTACT_TRACING_DATASET_FORMAT.md) and content of their data.
 
 ## What is control?
-Data control is the ability to decide the lifecycle of their data. Should data exist, or should it not? When a researcher is approved, should data be used, or should it be withheld?
+Data control is the freedom to decide the lifecycle of their data. Should data exist, or should it not? When a researcher is approved, should data be used, or should it be withheld?
 
 ## What stages are there?
 
