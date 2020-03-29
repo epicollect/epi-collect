@@ -39,7 +39,7 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
         axios.post('/api/extract/google-takeout', data, {
             onUploadProgress: ProgressEvent => {
                 this.setState({
-                    loaded: (ProgressEvent.loaded / ProgressEvent.total * 100),
+                    loaded: Math.min(ProgressEvent.loaded / ProgressEvent.total * 100, 95),
                     processing: ProgressEvent.loaded === ProgressEvent.total
                 })
             },

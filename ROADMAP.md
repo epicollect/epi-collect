@@ -32,8 +32,8 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] Include count of traces in the database (don't hit DB to save $$$, update manually every day)
   - [ ] Upload data step
     - [ ] Show the user how to upload via GIFs
-    - [ ] Upload progress
-      - [ ] Make it go to 95% while backend processes
+    - [x] Upload progress
+      - [x] Make it go to 95% while backend processes
   - [ ] Review and filter data
     - [ ] Handle case where the user doesn’t have any data in selected period
     - [ ] Polish buttons, map, and timeline
@@ -70,11 +70,11 @@ Questions? Reach out on [Slack](https://join.slack.com/t/epi-collect/shared_invi
     - [ ] #dataset
     - [ ] #engineers
     - [ ] Workspace greeting
-- [ ] Create shared inbox (core@epi-collect.org)
+- [x] Create shared inbox (core@epi-collect.org)
     - [ ] Update links in GH org
     - [ ] Update links in website
     - [ ] Update links in markdown files
-    - [ ] Update email "From"
+    - [x] Update email "From" (note: turned this into "noreply")
 - [ ] Update GitHub organization
 - [x] Add Google Analytics
 - [x] Add Sentry to frontend and backend
