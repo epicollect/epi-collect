@@ -6,9 +6,6 @@
   flex-direction: column;
   align-items: center;
   .gifPlaceholder {
-    @media screen and (min-width: 800px) {
-      order: 2;
-    }
     order: unset;
     background-color: #eee;
     width: 400px;
@@ -19,9 +16,6 @@
     align-items: center;
   }
   .stepsContainer {
-    @media screen and (min-width: 800px) {
-      order: 1;
-    }
     order: unset;
     display: flex;
     align-items: center;
@@ -30,6 +24,7 @@
     ul {
       @media screen and (min-width: 800px) {
         height: 100%;
+        padding-left: 2rem;
       }
       height: unset;
       padding-left: 0;
@@ -40,9 +35,6 @@
       width: 100%;
       margin-bottom: 2rem;
       li {
-        // border-bottom: 1px dashed #999;
-        padding-top: 1rem;
-        padding-bottom: 1rem;
         width: 100%;
         font-weight: bold;
       }

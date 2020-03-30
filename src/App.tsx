@@ -2,7 +2,6 @@ import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Home from './info_pages/Home';
 import Delete from './info_pages/Delete';
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import Wizard from './wizard/Wizard';
 import Upload from "./wizard/Upload";
 import SelectData from "./wizard/SelectData";
