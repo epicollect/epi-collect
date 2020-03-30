@@ -22,9 +22,9 @@
 | __[Pre-launch](./ROADMAP.md)__ (2 active contributors) | [Become our first researcher](./RESEARCHERS.md) |
 
 
-- Establish privacy-respecting [best practices](./PRIVACY.md) for open source data donation
+- Establish privacy-respecting [best practices](./PRIVACY.md) for data donation
 - Create a community-driven dataset standard for contact tracing
-- Enable researchers to model the spread of COVID-19 and other diseases using donated data
+- Enable researchers and city health departments to investigate the spread of COVID-19 and other diseases using donated data
 
 ## [Frequently Asked Questions](./FAQ.md)
 
