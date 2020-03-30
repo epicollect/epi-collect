@@ -38,6 +38,7 @@ class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any>
 
         let {path} = this.props.match;
         let location = this.props.location;
+        const { steps } = this.props;
 
         let seen_active = false;
 
@@ -47,14 +48,14 @@ class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any>
                 <Container>
                     <Row>
                         <Breadcrumb>
-                            {this.props.steps.map((step) => {
+                            {this.props.steps.slice(0, steps.length - 1).map((step) => {
                                     if (step.uri === location.pathname) {
                                         // Current
                                         seen_active = true;
                                         return (
                                             <LinkContainer to={step.uri} key={step.uri}
                                                            onClick={(e) => this.onNavigate(e, step.uri, this.state)}>
-                                                <Breadcrumb.Item className="current" active>{step.label}</Breadcrumb.Item>
+                                                <Breadcrumb.Item className="completed">{step.label}</Breadcrumb.Item>
                                             </LinkContainer>
                                         )
                                     } else if (!seen_active) {

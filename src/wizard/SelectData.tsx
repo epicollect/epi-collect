@@ -2,6 +2,7 @@ import React from 'react';
 import {GeoMapState, Location, WizardStepProps} from '../types';
 import GeoMap from "./GeoMap";
 import {Redirect} from 'react-router-dom';
+import './SelectData.scss';
 
 type DataSelectorState = {};
 

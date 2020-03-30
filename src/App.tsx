@@ -10,6 +10,7 @@ import Confirm from "./wizard/Confirm";
 import Completed from "./wizard/Completed";
 import { Navbar, Nav, Container, Row } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
+import './App.scss';
 
 const App = () => (
     <Router>
@@ -34,12 +35,20 @@ const App = () => (
             <Route path="/delete" component={Delete}/>
             <Route path="/wizard" render={(props) => <Wizard {...props} steps={[
                 {uri: '/wizard/upload', component: Upload, label: "Upload your data"},
-                {uri: '/wizard/select-data', component: SelectData, label: "Review and filter data"},
+                {uri: '/wizard/select-data', component: SelectData, label: "Filter data"},
                 {uri: '/wizard/symptoms', component: Symptoms, label: "Add symptoms"},
                 {uri: '/wizard/confirm', component: Confirm, label: "Confirm"},
                 {uri: '/wizard/completed', component: Completed, label: "Completed"}
             ]}/>}/>
         </Switch>
+        <Container className="footerContainer">
+            <Navbar>
+                <Nav>
+                    <Nav.Link href="https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg" target="_blank" rel="noopener">Slack</Nav.Link>
+                    <Nav.Link href="https://github.com/epicollect/epi-collect" target="_blank" rel="noopener">GitHub</Nav.Link>
+                </Nav>
+            </Navbar>
+        </Container>
     </Router>
 );
 

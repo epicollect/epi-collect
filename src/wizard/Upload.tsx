@@ -1,10 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import {Progress} from 'reactstrap';
-import '../styles.scss';
+import {Progress, Input} from 'reactstrap';
 import {Location, WizardStepProps} from "../types";
 import {BrowserView, MobileView,} from "react-device-detect";
-import {Button} from "react-bootstrap";
+import {Button, Form} from "react-bootstrap";
 
 type UploadState = {
     selectedFile: File | null,
@@ -63,24 +62,37 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
     }
 
     render() {
+        const { selectedFile } = this.state
+
         return (
             <>
+            
                 <MobileView>
                     <p>You're accessing this website from a mobile device. This is not supported, please visit on a
                         desktop/laptop. (text TODO)</p>
                     <Button variant="primary" href="/">Back to home</Button>
                 </MobileView>
                 <BrowserView>
-                    <div className="App">
-                        <header className="App-header">
-                            <form onSubmit={(e) => this.onFormSubmit(e)}>
-                                <input type="file" name="file" onChange={(e) => this.handleChange(e.target.files)}/>
-                                <Progress max="100" color="success"
-                                          value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
-                                <button type="submit">Upload</button>
-                            </form>
-                        </header>
-                    </div>
+                    <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.onFormSubmit(e)}>
+                        <p>
+                            <Form.File
+                                id="file"
+                                name="file"
+                                label={selectedFile ? selectedFile.name : 'Upload your Google zip file here'}
+                                custom
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleChange(e.target.files)}
+                            />
+                        </p>
+
+                        <p>
+                            <Progress max="100" color="success"
+                                        value={this.state.loaded}>{Math.round(this.state.loaded)}%</Progress>
+                        </p>
+
+                        <p>
+                            <Button type="submit">Upload</Button>
+                        </p>
+                    </Form>
                 </BrowserView>
             </>
         )
