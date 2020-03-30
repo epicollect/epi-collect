@@ -7,3 +7,11 @@
   justify-content: center;
   align-items: center;
 }
+
+.dataPointsCount {
+  margin-left: 2rem;
+  vertical-align: middle;
+  .questionCircle {
+    margin-left: 1rem;
+  }
+}

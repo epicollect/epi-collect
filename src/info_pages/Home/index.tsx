@@ -1,8 +1,10 @@
 import React from 'react';
-import { Button, Container, Tabs, Image } from "react-bootstrap";
+import { Button, Container, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { LinkContainer } from 'react-router-bootstrap';
-import './styles.scss';
+import { FaQuestionCircle } from 'react-icons/fa';
 import FAQ from './FAQ';
+import './index.scss';
+import HowDoesItWork from './HowDoesItWork';
 
 // className="justify-content-center"
 
@@ -13,21 +15,26 @@ const Home = () => {
                 This website allows you to anonymously donate your
                 Google location data to COVID-19 research projects.
             </h1>
-
-            <LinkContainer to="/wizard">
-                <Button variant="primary" size="lg">Add my data</Button>
-            </LinkContainer>
-            <span>Add data points: 0</span>
-            
+            <p>
+                <LinkContainer to="/wizard">
+                    <Button variant="primary" size="lg">Add my data</Button>
+                </LinkContainer>
+                <span className="dataPointsCount">
+                    Data points: 0
+                    <OverlayTrigger
+                        overlay={
+                            <Tooltip id="questionCircle">Last updated: 2020/03/30</Tooltip>
+                        }
+                        placement="bottom"
+                    >
+                        <span className="questionCircle"><FaQuestionCircle /></span>
+                    </OverlayTrigger>
+                </span>
+            </p>
             <h3>How does it work?</h3>
-            <div className="gifDemonstrationContainer">
-                GIF here
-            </div>
-
-            <h3>Frequently Asked Questions</h3>
+            <HowDoesItWork />
+            <h3>Frequently asked questions</h3>
             <FAQ />
-
-            <h3>Privacy</h3>
         </Container>
     );
 };

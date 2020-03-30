@@ -1,0 +1,51 @@
+.demonstrationContainer {
+  @media screen and (min-width: 800px) {
+    flex-direction: row;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .gifPlaceholder {
+    @media screen and (min-width: 800px) {
+      order: 2;
+    }
+    order: unset;
+    background-color: #eee;
+    width: 400px;
+    height: 240px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .stepsContainer {
+    @media screen and (min-width: 800px) {
+      order: 1;
+    }
+    order: unset;
+    display: flex;
+    align-items: center;
+    height: 240px;
+    flex: 1;
+    ul {
+      @media screen and (min-width: 800px) {
+        height: 100%;
+      }
+      height: unset;
+      padding-left: 0;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 2rem;
+      li {
+        // border-bottom: 1px dashed #999;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        width: 100%;
+        font-weight: bold;
+      }
+    }
+  }
+}

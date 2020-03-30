@@ -1,0 +1,14 @@
+ul.faq {
+  margin-bottom: 2rem;
+  list-style: none;
+  padding-left: 0;
+  li {
+    margin-bottom: 0;
+    border-bottom: 1px dashed #999;
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+    summary {
+      margin-bottom: 0;
+    }
+  }
+}

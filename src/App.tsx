@@ -19,12 +19,12 @@ const App = () => (
                 <Navbar>
                     <Navbar.Brand href="/">Epi-Collect</Navbar.Brand>
                     <Nav className="mr-auto">
-                        <LinkContainer exact to="/">
-                            <Nav.Link>Home</Nav.Link>
-                        </LinkContainer>
                         <LinkContainer exact to="/delete">
                             <Nav.Link>Delete my data</Nav.Link>
                         </LinkContainer>
+                    </Nav>
+                    <Nav>
+                        <Nav.Link href="https://join.slack.com/t/epi-collect/shared_invite/zt-d24uxjzl-7oT5ljZwRc74VMgozPwAqg" target="_blank" rel="noopener">Slack</Nav.Link>
                         <Nav.Link href="https://github.com/epicollect/epi-collect" target="_blank" rel="noopener">GitHub</Nav.Link>
                     </Nav>
                 </Navbar>
