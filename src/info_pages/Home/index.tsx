@@ -19,7 +19,7 @@ const Home = () => {
                 <LinkContainer to="/wizard">
                     <Button variant="primary" size="lg">Add my data</Button>
                 </LinkContainer>
-                <span className="dataPointsCount">
+                {/* <span className="dataPointsCount">
                     Data points: 0
                     <OverlayTrigger
                         overlay={
@@ -29,7 +29,7 @@ const Home = () => {
                     >
                         <span className="questionCircle"><FaQuestionCircle /></span>
                     </OverlayTrigger>
-                </span>
+                </span> */}
             </p>
             <h3>How does it work?</h3>
             <HowDoesItWork />
