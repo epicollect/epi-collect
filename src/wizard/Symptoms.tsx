@@ -104,14 +104,15 @@ const SymptomsForm = (props: SymptomsFormProps) => {
     }
   }
 
-  // @ts-ignore
   preexisting_conditions.map(
+    // @ts-ignore
     (condition) => (initial_values.preexisting_conditions[condition.id] = '')
   )
   // TODO: Simplify this
   const validate_preexisting_conditions = {}
-  // @ts-ignore
+
   preexisting_conditions.map(
+    // @ts-ignore
     (condition) => (validate_preexisting_conditions[condition.id] = Yup.number().min(0, 'Required'))
   )
   // @ts-ignore
