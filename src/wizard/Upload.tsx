@@ -66,7 +66,6 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
 
         return (
             <>
-            
                 <MobileView>
                     <p>You're accessing this website from a mobile device. This is not supported, please visit on a
                         desktop/laptop. (text TODO)</p>
@@ -75,13 +74,13 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
                 <BrowserView>
                     <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.onFormSubmit(e)}>
                         <p>
-                            <Form.File
-                                id="file"
-                                name="file"
-                                label={selectedFile ? selectedFile.name : 'Upload your Google zip file here'}
-                                custom
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => this.handleChange(e.target.files)}
-                            />
+                            <Form.File custom>
+                              <Form.File.Input isValid={false} />
+                              <Form.File.Label data-browse="Upload">
+                              {selectedFile ? selectedFile.name : 'Upload your Google zip file here'}
+                              </Form.File.Label>
+                              {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
+                            </Form.File>
                         </p>
 
                         <p>

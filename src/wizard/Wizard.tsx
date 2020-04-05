@@ -4,6 +4,8 @@ import {Breadcrumb, Container, Row} from "react-bootstrap";
 import {RouteComponentProps, StaticContext} from "react-router";
 import {LinkContainer} from "react-router-bootstrap";
 import {WizardState} from "../types";
+import { Badge } from "react-bootstrap";
+import './styles.scss';
 
 type Step = {
     uri: string,
@@ -43,40 +45,57 @@ class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any>
         let seen_active = false;
 
         return (
-
             <>
                 <Container>
-                    <Row>
-                        <Breadcrumb>
-                            {this.props.steps.slice(0, steps.length - 1).map((step) => {
+                    <p>
+                        <Breadcrumb className="wizardBreadcrumb">
+                            {steps.slice(0, steps.length - 1).map((step, i) => {
                                     if (step.uri === location.pathname) {
                                         // Current
                                         seen_active = true;
                                         return (
+                                          <Breadcrumb.Item className="completed">
                                             <LinkContainer to={step.uri} key={step.uri}
                                                            onClick={(e) => this.onNavigate(e, step.uri, this.state)}>
-                                                <Breadcrumb.Item className="completed">{step.label}</Breadcrumb.Item>
+                                                <>
+                                                  <Badge pill variant="secondary">{i + 1}</Badge>
+                                                  &nbsp;
+                                                  {step.label}
+                                                </>
                                             </LinkContainer>
+                                          </Breadcrumb.Item>
                                         )
                                     } else if (!seen_active) {
                                         // Before current
                                         return (
+                                          <Breadcrumb.Item className="completed">
                                             <LinkContainer to={step.uri} key={step.uri}
                                                            onClick={(e) => this.onNavigate(e, step.uri, this.state)}>
-                                                <Breadcrumb.Item className="completed">{step.label}</Breadcrumb.Item>
+                                                <>
+                                                  <Badge pill variant="secondary">{i + 1}</Badge>
+                                                  &nbsp;
+                                                  {step.label}
+                                                </>
                                             </LinkContainer>
+                                          </Breadcrumb.Item>
                                         )
                                     } else {
                                         // After current
                                         return (
-                                            <Breadcrumb.Item active key={step.uri}>{step.label}</Breadcrumb.Item>
+                                            <Breadcrumb.Item active key={step.uri}>
+                                              <>
+                                                <Badge pill variant="secondary">{i + 1}</Badge>
+                                                &nbsp;
+                                                {step.label}
+                                              </>
+                                            </Breadcrumb.Item>
                                         )
                                     }
                                 }
                             )}
                         </Breadcrumb>
-                    </Row>
-                    <Row className="justify-content-md-center">
+                    </p>
+                    <p className="justify-content-md-center">
                         <Switch>
                             <Route key={""} exact path={path}>
                                 <Redirect to={`${path}/upload`}/>
@@ -93,7 +112,7 @@ class Wizard extends React.Component<RouteComponentProps<{}, StaticContext, any>
                                 }
                             )}
                         </Switch>
-                    </Row>
+                    </p>
                 </Container>
 
             </>
