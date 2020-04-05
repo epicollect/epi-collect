@@ -17,3 +17,7 @@ $container-max-widths: (
 // Import Bootstrap and its default variables
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap/scss/variables.scss';
+
+section {
+  margin-bottom: $paragraph-margin-bottom;
+}

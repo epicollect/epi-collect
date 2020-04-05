@@ -1,7 +1,7 @@
 import React from 'react'
 import { GeoMapProps, GeoMapState, Location } from '../types'
 import { DrawingManager, GoogleMap, useLoadScript } from '@react-google-maps/api'
-import { Spinner } from 'react-bootstrap'
+import { Spinner, Button } from 'react-bootstrap'
 import { Handles, Rail, Slider, Tracks } from 'react-compound-slider'
 import { Handle, SliderRail, Track } from './SliderComponents'
 
@@ -80,7 +80,7 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
       hour12: true,
     }).format(new Date(timestamp))
 
-  handleClick(event: React.MouseEvent<HTMLAnchorElement>) {
+  handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
     this.props.onDone(this.getValidLocations(), this.state)
   }
@@ -381,7 +381,9 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
             To: {this.formatTimestamp(this.state.selected_time_range[1])}}
           </p>
         </div>
-        <a onClick={(e) => this.handleClick(e)}>Next</a>
+        <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleClick(e)}>
+          Next
+        </Button>
       </>
     )
   }

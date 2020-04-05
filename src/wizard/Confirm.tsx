@@ -3,6 +3,7 @@ import { FormValues, WizardStepProps } from '../types'
 import { Redirect } from 'react-router-dom'
 import ReCAPTCHA from 'react-google-recaptcha'
 import axios from 'axios'
+import { Button } from 'react-bootstrap'
 
 class Confirm extends React.Component<WizardStepProps, {}> {
   _recaptcha_ref: RefObject<any>
@@ -12,7 +13,7 @@ class Confirm extends React.Component<WizardStepProps, {}> {
     this._recaptcha_ref = React.createRef()
   }
 
-  handleClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+  handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     this._recaptcha_ref.current.execute()
   }
@@ -53,7 +54,9 @@ class Confirm extends React.Component<WizardStepProps, {}> {
             onChange={this.onCaptchaComplete}
             ref={this._recaptcha_ref}
           />
-          <a onClick={(e) => this.handleClick(e)}>Next</a>
+          <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleClick(e)}>
+            Next
+          </Button>
         </div>
       )
     } else {

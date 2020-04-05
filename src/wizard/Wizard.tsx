@@ -1,6 +1,6 @@
 import { Redirect, Route, Switch } from 'react-router-dom'
 import React, { ComponentType } from 'react'
-import { Breadcrumb, Container, Row } from 'react-bootstrap'
+import { Breadcrumb, Container } from 'react-bootstrap'
 import { RouteComponentProps, StaticContext } from 'react-router'
 import { LinkContainer } from 'react-router-bootstrap'
 import { WizardState } from '../types'
@@ -48,17 +48,16 @@ class Wizard extends React.Component<
     return (
       <>
         <Container>
-          <p>
+          <section>
             <Breadcrumb className="wizardBreadcrumb">
               {steps.slice(0, steps.length - 1).map((step, i) => {
                 if (step.uri === location.pathname) {
                   // Current
                   seen_active = true
                   return (
-                    <Breadcrumb.Item className="completed">
+                    <Breadcrumb.Item className="completed" key={step.uri}>
                       <LinkContainer
                         to={step.uri}
-                        key={step.uri}
                         onClick={(e) => this.onNavigate(e, step.uri, this.state)}
                       >
                         <>
@@ -106,8 +105,8 @@ class Wizard extends React.Component<
                 }
               })}
             </Breadcrumb>
-          </p>
-          <p className="justify-content-md-center">
+          </section>
+          <section className="justify-content-md-center">
             <Switch>
               <Route key={''} exact={true} path={path}>
                 <Redirect to={`${path}/upload`} />
@@ -130,7 +129,7 @@ class Wizard extends React.Component<
                 )
               })}
             </Switch>
-          </p>
+          </section>
         </Container>
       </>
     )

@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Progress, Input } from 'reactstrap'
+import { Progress } from 'reactstrap'
 import { Location, WizardStepProps } from '../types'
 import { BrowserView, MobileView } from 'react-device-detect'
 import { Button, Form } from 'react-bootstrap'
@@ -21,7 +21,8 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
     }
   }
 
-  handleChange(selectorFiles: FileList | null) {
+  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const selectorFiles = e.target.files
     this.setState({
       selectedFile: selectorFiles ? selectorFiles[0] : null,
       loaded: 0,
@@ -71,35 +72,40 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
     return (
       <>
         <MobileView>
-          <p>
+          <section>
             You're accessing this website from a mobile device. This is not supported, please visit
             on a desktop/laptop. (text TODO)
-          </p>
+          </section>
           <Button variant="primary" href="/">
             Back to home
           </Button>
         </MobileView>
         <BrowserView>
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.onFormSubmit(e)}>
-            <p>
+            <section>
               <Form.File custom={true}>
-                <Form.File.Input isValid={false} />
+                <Form.File.Input
+                  isValid={false}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    this.handleChange.bind(this)
+                  }
+                />
                 <Form.File.Label data-browse="Upload">
                   {selectedFile ? selectedFile.name : 'Upload your Google zip file here'}
                 </Form.File.Label>
                 {/* <Form.Control.Feedback type="valid">You did it!</Form.Control.Feedback> */}
               </Form.File>
-            </p>
+            </section>
 
-            <p>
+            <section>
               <Progress max="100" color="success" value={this.state.loaded}>
                 {Math.round(this.state.loaded)}%
               </Progress>
-            </p>
+            </section>
 
-            <p>
+            <section>
               <Button type="submit">Upload</Button>
-            </p>
+            </section>
           </Form>
         </BrowserView>
       </>
