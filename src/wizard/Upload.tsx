@@ -84,12 +84,7 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
           <Form onSubmit={(e: React.FormEvent<HTMLFormElement>) => this.onFormSubmit(e)}>
             <section>
               <Form.File custom={true}>
-                <Form.File.Input
-                  isValid={false}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    this.handleChange.bind(this)
-                  }
-                />
+                <Form.File.Input isValid={false} onChange={this.handleChange.bind(this)} />
                 <Form.File.Label data-browse="Upload">
                   {selectedFile ? selectedFile.name : 'Upload your Google zip file here'}
                 </Form.File.Label>
