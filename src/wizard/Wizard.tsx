@@ -55,7 +55,7 @@ class Wizard extends React.Component<
                   // Current
                   seen_active = true
                   return (
-                    <Breadcrumb.Item className="completed" key={step.uri}>
+                    <Breadcrumb.Item className="completed" key={step.uri + '-breadcrumb'}>
                       <LinkContainer
                         to={step.uri}
                         onClick={(e) => this.onNavigate(e, step.uri, this.state)}
@@ -73,10 +73,9 @@ class Wizard extends React.Component<
                 } else if (!seen_active) {
                   // Before current
                   return (
-                    <Breadcrumb.Item className="completed">
+                    <Breadcrumb.Item className="completed" key={step.uri + '-breadcrumb'}>
                       <LinkContainer
                         to={step.uri}
-                        key={step.uri}
                         onClick={(e) => this.onNavigate(e, step.uri, this.state)}
                       >
                         <>
@@ -92,7 +91,7 @@ class Wizard extends React.Component<
                 } else {
                   // After current
                   return (
-                    <Breadcrumb.Item active={true} key={step.uri}>
+                    <Breadcrumb.Item active={true} key={step.uri + '-breadcrumb'}>
                       <>
                         <Badge pill={true} variant="secondary">
                           {i + 1}
