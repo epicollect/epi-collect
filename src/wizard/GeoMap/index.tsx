@@ -1,9 +1,12 @@
 import React from 'react'
-import { GeoMapProps, GeoMapState, Location } from '../types'
+import { GeoMapProps, GeoMapState, Location } from '../../types'
 import { DrawingManager, GoogleMap, useLoadScript } from '@react-google-maps/api'
-import { Spinner, Button } from 'react-bootstrap'
+import { Spinner, Button, Row, Col, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
 import { Handles, Rail, Slider, Tracks } from 'react-compound-slider'
-import { Handle, SliderRail, Track } from './SliderComponents'
+import { Handle, SliderRail, Track } from '../SliderComponents'
+import { Container } from 'reactstrap'
+import { FaRegHandPaper, FaDrawPolygon } from 'react-icons/fa'
+import './styles.scss'
 
 const libraries = ['drawing', 'geometry']
 
@@ -68,17 +71,28 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
     }
   }
 
-  formatTimestamp = (timestamp: number) =>
-    new Intl.DateTimeFormat('en-US', {
+  formatTimestamp = (timestamp: number) => {
+    const dateString = new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
-      month: 'long',
+      month: 'short',
       day: 'numeric',
+      weekday: 'short',
+      hour12: false,
+    }).format(new Date(timestamp))
+
+    const timeString = new Intl.DateTimeFormat('en-US', {
       hour: 'numeric',
       minute: '2-digit',
       second: '2-digit',
-      weekday: 'short',
       hour12: true,
     }).format(new Date(timestamp))
+
+    return {
+      dateString,
+      timeString,
+      fullString: dateString + ', ' + timeString,
+    }
+  }
 
   handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
@@ -237,18 +251,18 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
       content: '',
     })
     this.props.locations.forEach((location: Location, index: number) => {
-      const formatted_timestamp: string = this.formatTimestamp(location.timestamp)
+      const formattedTimestamp: string = this.formatTimestamp(location.timestamp).fullString
       // @ts-ignore
       const marker = new google.maps.Marker({
         position: {
           lat: location.latitude,
           lng: location.longitude,
         },
-        title: formatted_timestamp,
+        title: formattedTimestamp,
       })
       // @ts-ignore
       marker.addListener('click', function () {
-        infowindow.setContent(formatted_timestamp)
+        infowindow.setContent(formattedTimestamp)
         infowindow.open(map_instance, marker)
       })
       marker.setMap(map_instance)
@@ -286,104 +300,136 @@ class GeoMap extends React.Component<GeoMapProps, GeoMapState> {
   }
 
   render() {
+    const { selected_time_range } = this.state
+    const formattedFromString = this.formatTimestamp(selected_time_range[0])
+    const formattedToString = this.formatTimestamp(selected_time_range[1])
     return (
       <>
-        <p>
-          Select on a map which of these {this.state.valid_markers.length} locations you want to
-          submit
-        </p>
-        <div>
+        <section className="text-center">
+          Select which of these {this.state.valid_markers.length} locations you want to submit
+        </section>
+        <section className="sliderSection">
+          <Slider
+            mode={2}
+            step={0.01}
+            domain={this.state.domain}
+            rootStyle={{
+              position: 'relative' as 'relative',
+              width: '100%',
+            }}
+            onChange={this.onSliderChange}
+            onUpdate={this.onSliderUpdate}
+            values={this.state.values}
+          >
+            <Rail>{({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}</Rail>
+            <Handles>
+              {({ handles, getHandleProps }) => (
+                <div className="slider-handles">
+                  {handles.map((handle) => (
+                    <Handle
+                      key={handle.id}
+                      handle={handle}
+                      domain={this.state.domain}
+                      getHandleProps={getHandleProps}
+                    />
+                  ))}
+                </div>
+              )}
+            </Handles>
+            <Tracks left={false} right={false}>
+              {({ tracks, getTrackProps }) => (
+                <div className="slider-tracks">
+                  {tracks.map(({ id, source, target }) => (
+                    <Track key={id} source={source} target={target} getTrackProps={getTrackProps} />
+                  ))}
+                </div>
+              )}
+            </Tracks>
+          </Slider>
+        </section>
+        <section>
+          <Container>
+            <Row>
+              <Col className="formattedDateString">
+                <div>From:</div>
+                {formattedFromString.dateString}
+                <br />
+                {formattedFromString.timeString}
+              </Col>
+              <Col className="formattedDateString">
+                <div>To:</div>
+                {formattedToString.dateString}
+                <br />
+                {formattedToString.timeString}
+              </Col>
+            </Row>
+          </Container>
+        </section>
+        {/* <section>
+          <ButtonToolbar>
+            <ButtonGroup>
+              <Button variant="light">
+                <FaRegHandPaper />
+                Move
+              </Button>
+              <Button variant="light">
+                <FaDrawPolygon />
+                Draw
+              </Button>
+            </ButtonGroup>
+          </ButtonToolbar>
           <button onClick={this.deleteSelectedShape}>Delete selected shape</button>
           <button onClick={this.deleteAllShapes}>Delete all shapes</button>
-        </div>
-        <GoogleMap
-          mapContainerStyle={{
-            height: '400px',
-            width: '100%',
-          }}
-          options={{
-            mapTypeControl: false,
-            streetViewControl: false,
-          }}
-          onLoad={this.onMapLoad}
-        >
-          <DrawingManager
-            options={{
-              drawingMode: 'polygon',
-              drawingControlOptions: {
-                drawingModes: ['polygon'],
-              },
-              markerOptions: {
-                draggable: true,
-              },
-              polylineOptions: {
-                editable: true,
-              },
-              rectangleOptions: {
-                strokeWeight: 0,
-                fillOpacity: 0.45,
-                editable: true,
-              },
-              circleOptions: {
-                strokeWeight: 0,
-                fillOpacity: 0.45,
-                editable: true,
-              },
-              polygonOptions: {
-                strokeWeight: 0,
-                fillOpacity: 0.45,
-                editable: true,
-              },
+        </section> */}
+        <section>
+          <GoogleMap
+            mapContainerStyle={{
+              height: '500px',
+              width: '100%',
             }}
-            onOverlayComplete={this.onOverlayComplete}
-          />
-        </GoogleMap>
-        <Slider
-          mode={2}
-          step={0.01}
-          domain={this.state.domain}
-          rootStyle={{
-            position: 'relative' as 'relative',
-            width: '100%',
-          }}
-          onChange={this.onSliderChange}
-          onUpdate={this.onSliderUpdate}
-          values={this.state.values}
-        >
-          <Rail>{({ getRailProps }) => <SliderRail getRailProps={getRailProps} />}</Rail>
-          <Handles>
-            {({ handles, getHandleProps }) => (
-              <div className="slider-handles">
-                {handles.map((handle) => (
-                  <Handle
-                    key={handle.id}
-                    handle={handle}
-                    domain={this.state.domain}
-                    getHandleProps={getHandleProps}
-                  />
-                ))}
-              </div>
-            )}
-          </Handles>
-          <Tracks left={false} right={false}>
-            {({ tracks, getTrackProps }) => (
-              <div className="slider-tracks">
-                {tracks.map(({ id, source, target }) => (
-                  <Track key={id} source={source} target={target} getTrackProps={getTrackProps} />
-                ))}
-              </div>
-            )}
-          </Tracks>
-        </Slider>
-        <div>
-          <p>
-            From: {this.formatTimestamp(this.state.selected_time_range[0])} <br />
-            To: {this.formatTimestamp(this.state.selected_time_range[1])}}
-          </p>
-        </div>
-        <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleClick(e)}>
-          Next
-        </Button>
+            options={{
+              mapTypeControl: false,
+              streetViewControl: false,
+            }}
+            onLoad={this.onMapLoad}
+          >
+            <DrawingManager
+              options={{
+                // drawingMode: null,
+                drawingControlOptions: {
+                  drawingModes: [''],
+                },
+                markerOptions: {
+                  draggable: true,
+                },
+                // polylineOptions: {
+                //   editable: true,
+                // },
+                // rectangleOptions: {
+                //   strokeWeight: 0,
+                //   fillOpacity: 0.45,
+                //   editable: true,
+                // },
+                circleOptions: {
+                  strokeWeight: 0,
+                  fillOpacity: 0.45,
+                  editable: true,
+                },
+                // polygonOptions: {
+                //   strokeWeight: 0,
+                //   fillOpacity: 0.45,
+                //   editable: true,
+                // },
+              }}
+              onOverlayComplete={this.onOverlayComplete}
+            />
+          </GoogleMap>
+        </section>
+        <section className="text-right">
+          <Button onClick={(e: React.MouseEvent<HTMLButtonElement>) => this.handleClick(e)}>
+            Next
+          </Button>
+        </section>
       </>
     )
   }
