@@ -12,29 +12,34 @@ type UploadState = {
 }
 
 class Upload extends React.Component<WizardStepProps, UploadState> {
-  constructor(props: WizardStepProps) {
-    super(props)
-    this.state = {
-      selectedFile: null,
-      loaded: 0,
-      processing: false,
-    }
+  state: UploadState = {
+    selectedFile: null,
+    loaded: 0,
+    processing: false,
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const selectorFiles = e.target.files
+    const selectedFile = selectorFiles ? selectorFiles[0] : null
     this.setState({
-      selectedFile: selectorFiles ? selectorFiles[0] : null,
+      selectedFile,
       loaded: 0,
       processing: false,
     })
+    this.processZip(selectedFile)
   }
 
   onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    this.processZip(this.state.selectedFile)
+  }
+
+  processZip(selectedFile: File | null) {
     const data = new FormData()
-    const selected_file = this.state.selectedFile as File
-    data.append('file', selected_file)
+    if (!selectedFile) {
+      return console.warn('selected file was null')
+    }
+    data.append('file', selectedFile)
     axios
       .post('/api/extract/google-takeout', data, {
         onUploadProgress: (ProgressEvent) => {
@@ -96,10 +101,6 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
               <Progress max="100" color="success" value={this.state.loaded}>
                 {Math.round(this.state.loaded)}%
               </Progress>
-            </section>
-
-            <section>
-              <Button type="submit">Upload</Button>
             </section>
           </Form>
         </BrowserView>
