@@ -4,7 +4,7 @@ import './HowDoesItWork.scss'
 const HowDoesItWork = () => (
   <>
     <div className="demonstrationContainer">
-      <p className="gifPlaceholder">GIF here</p>
+      <img className="instructionsGif" src="/google_takeout_instructions.gif" alt="Google Takeout instructions" />
       <div className="stepsContainer">
         <ul>
           <li>1. Export your data from Google</li>

@@ -78,8 +78,8 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
       <>
         <MobileView>
           <section>
-            You're accessing this website from a mobile device. This is not supported, please visit
-            on a desktop/laptop. (text TODO)
+            You're accessing this website from a mobile device. This is currently not supported, please visit
+            on a desktop/laptop.
           </section>
           <Button variant="primary" href="/">
             Back to home
@@ -103,6 +103,26 @@ class Upload extends React.Component<WizardStepProps, UploadState> {
               </Progress>
             </section>
           </Form>
+          <h3>How do I obtain my location data?</h3>
+          <div className="demonstrationContainer">
+            <img className="instructionsGif" src="/google_takeout_instructions.gif" alt="Google Takeout instructions" />
+            <div className="stepsContainer">
+              <ul>
+                <li>1. Go to <a href="https://takeout.google.com/" title="Google Takeout">takeout.google.com</a></li>
+                <li>2. Login to your Google account</li>
+                <li>3. Click "Deselect all"</li>
+                <li>4. Select the checkbox next to "Location history"</li>
+                <li>5. Click "Next step"</li>
+                <li>6. Select e-mail as delivery method</li>
+                <li>7. Wait a couple of minutes for an email with a download link</li>
+                <li>8. Download your data by clicking the link in the e-mail</li>
+                <li>9. Upload your data above</li>
+              </ul>
+            </div>
+          </div>
+          <div className="additionalInstructionsContainer">
+            <p>After you've uploaded your data, you'll be able to filter and review your data before you submit it.</p>
+          </div>
         </BrowserView>
       </>
     )

@@ -5,12 +5,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .gifPlaceholder {
+  .instructionsGif {
     order: unset;
     background-color: #eee;
     width: 400px;
-    height: 240px;
+    height: 478px;
     border-radius: 8px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;

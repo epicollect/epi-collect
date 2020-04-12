@@ -21,7 +21,7 @@ const withIsLoadedHook = (Component: any) => {
       return <div>Map cannot be loaded right now, sorry.</div>
     }
 
-    return isLoaded ? <Component {...props} /> : <Spinner animation="border" variant="success" />
+    return isLoaded ? <Component {...props} /> : <div className="text-center"><Spinner animation="border" variant="success" /></div>
   }
 }
 

@@ -6,16 +6,7 @@ import ReactDatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 import { FormValues, WizardStepProps } from '../types'
 import { Redirect } from 'react-router-dom'
-
-type SelectField = {
-  id: string
-  name: string
-}
-
-type SelectOption = {
-  id: number
-  value: string
-}
+import {SymptomQuestions, select_options, symptoms, preexisting_conditions, pregnancy_trimester_options} from './questions'
 
 const DatePickerField = ({ ...props }) => {
   // @ts-ignore
@@ -28,7 +19,7 @@ const DatePickerField = ({ ...props }) => {
       {...props}
       selected={(field.value && new Date(field.value)) || null}
       dateFormat="dd/MM/yyyy"
-      wrapperClassName="form-control"
+      wrapperClassName="datepicker-container"
       className="form-control"
       onChange={(val) => {
         setFieldValue(field.name, val)
@@ -43,45 +34,17 @@ type SymptomsFormProps = {
 }
 
 const SymptomsForm = (props: SymptomsFormProps) => {
-  // Questions and answers are based on WHO advice for countries reporting to WHO:
-  // https://www.who.int/publications-detail/global-surveillance-for-human-infection-with-novel-coronavirus-(2019-ncov)
-  // and https://www.worldometers.info/coronavirus/coronavirus-symptoms/#pre
-  const preexisting_conditions: SelectField[] = [
-    { id: 'cardiovascular', name: 'Cardiovascular disease (including hypertension)' },
-    { id: 'diabetes', name: 'Diabetes' },
-    { id: 'liver_disease', name: 'Liver disease' },
-    { id: 'renal_disease', name: 'Chronic kidney disease (renal disease)' },
-    {
-      id: 'chronic_neurological_neuromuscular_disease',
-      name: 'Chronic neurological or neuromuscular disease',
-    },
-    { id: 'cancer', name: 'Cancer' },
-    { id: 'chronic_respiratory_disease', name: 'Chronic respiratory disease (COPD, asthma)' },
-  ]
-  const symptoms: SelectField[] = [
-    { id: 'fever', name: 'Fever' },
-    { id: 'cough', name: '(Dry) cough' },
-    { id: 'myalgia_fatigue', name: 'Muscle pain or fatigue' },
-    { id: 'sputum_production', name: 'Coughing up material' },
-    { id: 'headache', name: 'Headache' },
-    { id: 'haemoptysis', name: 'Coughing up blood' },
-    { id: 'diarrhea', name: 'Diarrhea' },
-    { id: 'shortness_of_breath', name: 'Shortness of breath' },
-    { id: 'confusion', name: 'Confusion, dizziness or nausea' },
-    { id: 'rhinorrhoea', name: 'Runny nose' },
-    { id: 'chest_pain', name: 'Chest pain' },
-    { id: 'vomiting', name: 'Vomiting' },
-    { id: 'sore_throat', name: 'Sore throat' },
-  ]
-  const select_options: SelectOption[] = [
-    { id: -1, value: '' },
-    { id: 0, value: 'No' },
-    { id: 1, value: 'Yes' },
-  ]
+
 
   let initial_values: FormValues
   if (props.initialData !== undefined) {
     initial_values = props.initialData as FormValues
+    preexisting_conditions.map(
+      // @ts-ignore
+      (condition) => (initial_values.preexisting_conditions[condition.id] = props.initialData.preexisting_conditions[condition.id])
+    )
+    // @ts-ignore
+    symptoms.map((symptom) => (initial_values.symptoms[symptom.id] = props.initialData.symptoms[symptom.id]))
   } else {
     initial_values = {
       age: '',
@@ -102,12 +65,15 @@ const SymptomsForm = (props: SymptomsFormProps) => {
       has_preexisting_conditions: '',
       preexisting_conditions: {},
     }
+    preexisting_conditions.map(
+      // @ts-ignore
+      (condition) => (initial_values.preexisting_conditions[condition.id] = '')
+    )
+    // @ts-ignore
+    symptoms.map((symptom) => (initial_values.symptoms[symptom.id] = ''))
   }
 
-  preexisting_conditions.map(
-    // @ts-ignore
-    (condition) => (initial_values.preexisting_conditions[condition.id] = '')
-  )
+
   // TODO: Simplify this
   const validate_preexisting_conditions = {}
 
@@ -115,15 +81,14 @@ const SymptomsForm = (props: SymptomsFormProps) => {
     // @ts-ignore
     (condition) => (validate_preexisting_conditions[condition.id] = Yup.number().min(0, 'Required'))
   )
-  // @ts-ignore
-  symptoms.map((symptom) => (initial_values.symptoms[symptom.id] = ''))
+
   // TODO: Simplify this
   const validate_symptoms = {}
   // @ts-ignore
   symptoms.map((symptom) => (validate_symptoms[symptom.id] = Yup.number().min(0, 'Required')))
 
   const validation_schema = Yup.object({
-    age: Yup.number().min(18, 'Must be at least 18').required('Required'),
+    age: Yup.number().min(18, 'You must be at least 18 years old to donate your data').required('Required'),
     gender: Yup.string(),
     has_symptoms: Yup.number(),
     diagnosis: Yup.object({
@@ -162,18 +127,17 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
   return (
     <Formik
-      enableReinitialize={true}
       initialValues={initial_values}
       validationSchema={validation_schema}
       onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(false)
-        props.onComplete(values)
+        setSubmitting(false);
+        props.onComplete(values);
       }}
     >
       {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="age">
-            <Form.Label>Age</Form.Label>
+            <Form.Label>{SymptomQuestions.age} *</Form.Label>
             <Form.Control
               name="age"
               as="select"
@@ -194,7 +158,7 @@ const SymptomsForm = (props: SymptomsFormProps) => {
           </Form.Group>
 
           <Form.Group controlId="gender">
-            <Form.Label>Gender</Form.Label>
+            <Form.Label>{SymptomQuestions.gender} (optional)</Form.Label>
             <Form.Control
               name="gender"
               as="select"
@@ -216,8 +180,10 @@ const SymptomsForm = (props: SymptomsFormProps) => {
             <ErrorMessage name="gender" />
           </Form.Group>
 
+          <strong>Symptoms &amp; Diagnosis (optional)</strong>
+
           <Form.Group controlId="has_symptoms">
-            <Form.Label>Do you currently have or have you had symptoms?</Form.Label>
+            <Form.Label>{SymptomQuestions.has_symptoms}</Form.Label>
             <Form.Control
               name="has_symptoms"
               as="select"
@@ -235,7 +201,7 @@ const SymptomsForm = (props: SymptomsFormProps) => {
           </Form.Group>
 
           <Form.Group controlId="diagnosis.covid19_diagnosed" className="d-none hide_has_symptoms">
-            <Form.Label>Have you been diagnosed with COVID-19?</Form.Label>
+            <Form.Label>{SymptomQuestions.diagnosis.covid19_diagnosed}</Form.Label>
             <Form.Control
               name="diagnosis.covid19_diagnosed"
               as="select"
@@ -257,23 +223,23 @@ const SymptomsForm = (props: SymptomsFormProps) => {
           </Form.Group>
 
           <Form.Group
-            controlId="diagnosis.covid19_diagnosis_date"
+            controlId="diagnosis.covid19_diagnosed_date"
             className="d-none hide_has_symptoms"
           >
-            <Form.Label>If applicable, when were you diagnosed?</Form.Label>
+            <Form.Label>{SymptomQuestions.diagnosis.covid19_diagnosed_date}</Form.Label>
             <DatePickerField
-              name="diagnosis.covid19_diagnosis_date"
+              name="diagnosis.covid19_diagnosed_date"
               maxDate={new Date()}
-              value={values['diagnosis.covid19_diagnosis_date']}
+              value={values['diagnosis.covid19_diagnosed_date']}
             />
-            <ErrorMessage name="diagnosis.covid19_diagnosis_date" />
+            <ErrorMessage name="diagnosis.covid19_diagnosed_date" />
           </Form.Group>
 
           <Form.Group
             controlId="diagnosis.first_symptoms_date"
             className="d-none hide_has_symptoms"
           >
-            <Form.Label>When did you first get symptoms?</Form.Label>
+            <Form.Label>{SymptomQuestions.diagnosis.first_symptoms_date}</Form.Label>
             <DatePickerField
               name="diagnosis.first_symptoms_date"
               maxDate={new Date()}
@@ -282,8 +248,8 @@ const SymptomsForm = (props: SymptomsFormProps) => {
             <ErrorMessage name="diagnosis.first_symptoms_date" />
           </Form.Group>
 
-          <Form.Group controlId="diagnosis.end_date">
-            <Form.Label>If you've recovered, when did you recover?</Form.Label>
+          <Form.Group controlId="diagnosis.end_date" className="d-none hide_has_symptoms">
+            <Form.Label>{SymptomQuestions.diagnosis.end_date}</Form.Label>
             <DatePickerField
               name="diagnosis.end_date"
               maxDate={new Date()}
@@ -320,8 +286,10 @@ const SymptomsForm = (props: SymptomsFormProps) => {
             </Form.Group>
           ))}
 
+          <strong>Pregnancy (optional)</strong>
+
           <Form.Group controlId="pregnancy.currently_pregnant">
-            <Form.Label>Are you currently pregnant?</Form.Label>
+            <Form.Label>{SymptomQuestions.pregnancy.currently_pregnant}</Form.Label>
             <Form.Control
               name="pregnancy.currently_pregnant"
               as="select"
@@ -343,7 +311,7 @@ const SymptomsForm = (props: SymptomsFormProps) => {
           </Form.Group>
 
           <Form.Group controlId="pregnancy.pregnancy_trimester" className="d-none hide_pregnancy">
-            <Form.Label>In what stage is your pregnancy?</Form.Label>
+            <Form.Label>{SymptomQuestions.pregnancy.pregnancy_trimester}</Form.Label>
             <Form.Control
               name="pregnancy.pregnancy_trimester"
               as="select"
@@ -356,21 +324,17 @@ const SymptomsForm = (props: SymptomsFormProps) => {
               }
             >
               <option key="" value="" />
-              <option key="first_trimester" value="first_trimester">
-                0-12 weeks
-              </option>
-              <option key="second_trimester" value="second_trimester">
-                13-26 weeks
-              </option>
-              <option key="third_trimester" value="third_trimester">
-                27 or more weeks
-              </option>
+              {pregnancy_trimester_options.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.value}
+                </option>
+              ))}
             </Form.Control>
             <ErrorMessage name="pregnancy.pregnancy_trimester" />
           </Form.Group>
 
           <Form.Group controlId="pregnancy.post_partum">
-            <Form.Label>Have you given birth in the last 6 weeks?</Form.Label>
+            <Form.Label>{SymptomQuestions.pregnancy.post_partum}</Form.Label>
             <Form.Control
               name="pregnancy.post_partum"
               as="select"
@@ -393,8 +357,10 @@ const SymptomsForm = (props: SymptomsFormProps) => {
             <ErrorMessage name="pregnancy.post_partum" />
           </Form.Group>
 
+          <strong>Pre-existing conditions (optional)</strong>
+
           <Form.Group controlId="has_preexisting_conditions">
-            <Form.Label>Do you have any pre-existing medical conditions?</Form.Label>
+            <Form.Label>{SymptomQuestions.has_preexisting_conditions}</Form.Label>
             <Form.Control
               name="has_preexisting_conditions"
               as="select"
@@ -454,15 +420,17 @@ const SymptomsForm = (props: SymptomsFormProps) => {
 
 class Symptoms extends React.Component<WizardStepProps, {}> {
   handleComplete(values: FormValues) {
-    this.props.data.user_data = values
-    this.props.onNavigate(undefined, '/wizard/confirm', this.props.data)
+    this.props.data.user_data = values;
+    this.props.onNavigate(undefined, '/wizard/confirm', this.props.data);
   }
 
   render() {
     if (this.props.data.locations.length !== 0) {
       return (
         <div>
-          <p>Indicate which symptoms you have</p>
+          <p>You can <strong>optionally</strong> answer any of the questions below to provide extra data.
+          The only <strong>required</strong> information is your age, as we only allow submissions from adults.
+          Note that any data you provide here will be linked to your location data.</p>
           <SymptomsForm
             initialData={this.props.data.user_data}
             onComplete={(e) => this.handleComplete(e)}

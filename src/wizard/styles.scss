@@ -5,3 +5,53 @@
     justify-content: center;
   }
 }
+
+.datepicker-container {
+  width: 100%;
+  display: block;
+}
+
+.demonstrationContainer {
+  @media screen and (min-width: 800px) {
+    flex-direction: row;
+  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .instructionsGif {
+    order: unset;
+    background-color: #eee;
+    width: 400px;
+    height: 478px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .stepsContainer {
+    order: unset;
+    display: flex;
+    align-items: center;
+    height: 240px;
+    flex: 1;
+    ul {
+      @media screen and (min-width: 800px) {
+        height: 100%;
+        padding-left: 2rem;
+      }
+      height: unset;
+      padding-left: 0;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: 2rem;
+      li {
+        width: 100%;
+        font-weight: bold;
+      }
+    }
+  }
+}
