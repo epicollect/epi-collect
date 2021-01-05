@@ -24,7 +24,7 @@
     "@types/reactstrap": "^8.4.2",
     "@types/recompose": "^0.30.7",
     "@types/yup": "^0.26.33",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
     "node-sass": "^4.13.1",
