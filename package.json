@@ -27,7 +27,7 @@
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "formik": "^2.1.4",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.0",
     "react-compound-slider": "^2.5.0",
